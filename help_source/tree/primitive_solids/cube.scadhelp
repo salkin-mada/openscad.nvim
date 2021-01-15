@@ -1,0 +1,43 @@
+
+cube
+
+
+Creates a cube in the first octant. When center is true, the cube is centered on the origin. Argument names are optional if given in the order shown here.
+
+cube(size = [x,y,z], center = true/false);
+cube(size =  x ,     center = true/false);
+
+    parameters:
+
+        size
+
+            single value, cube with all sides this length
+            3 value array [x,y,z], cube with dimensions x, y and z.
+
+        center
+
+            false (default), 1st (positive) octant, one corner at (0,0,0)
+            true, cube is centered at (0,0,0)
+
+default values:  cube();   yields:  cube(size = [1, 1, 1], center = false);
+
+    examples:
+
+OpenSCAD example Cube.jpg
+
+equivalent scripts for this example
+ cube(size = 18);
+ cube(18);
+ cube([18,18,18]);
+ .
+ cube(18,false);
+ cube([18,18,18],false);
+ cube([18,18,18],center=false);
+ cube(size = [18,18,18], center = false);
+ cube(center = false,size = [18,18,18] );
+
+OpenSCAD example Box.jpg
+
+equivalent scripts for this example
+ cube([18,28,8],true);
+ box=[18,28,8];cube(box,true);

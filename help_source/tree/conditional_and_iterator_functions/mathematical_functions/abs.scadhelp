@@ -1,0 +1,9 @@
+abs
+
+Mathematical absolute value function. Returns the positive value of a signed decimal number.
+
+Usage examples:
+
+abs(-5.0);  returns 5.0
+abs(0);     returns 0.0
+abs(8.0);   returns 8.0

@@ -1,0 +1,34 @@
+
+regular polygon
+
+A regular polygon of 3 or more sides can be created by using circle() with $fn set to the number of sides. The following two pieces of code are equivalent.
+
+ circle(r=1, $fn=4);
+
+ module regular_polygon(order = 4, r=1){
+     angles=[ for (i = [0:order-1]) i*(360/order) ];
+     coords=[ for (th=angles) [r*cos(th), r*sin(th)] ];
+     polygon(coords);
+ }
+ regular_polygon();
+
+These result in the following shapes, where the polygon is inscribed within the circle with all sides (and angles) equal. One corner points to the positive x direction. For irregular shapes see the polygon primitive below.
+
+OpenSCAD regular polygon using circle.jpg
+
+script for these examples
+ translate([-42,  0]){circle(20,$fn=3);%circle(20,$fn=90);}
+ translate([  0,  0]) circle(20,$fn=4);
+ translate([ 42,  0]) circle(20,$fn=5);
+ translate([-42,-42]) circle(20,$fn=6);
+ translate([  0,-42]) circle(20,$fn=8);
+ translate([ 42,-42]) circle(20,$fn=12);
+
+ color("black"){
+     translate([-42,  0,1])text("3",7,,center);
+     translate([  0,  0,1])text("4",7,,center);
+     translate([ 42,  0,1])text("5",7,,center);
+     translate([-42,-42,1])text("6",7,,center);
+     translate([  0,-42,1])text("8",7,,center);
+     translate([ 42,-42,1])text("12",7,,center);
+ }

@@ -1,0 +1,91 @@
+Echo Statements
+
+This function prints the contents to the compilation window (aka Console). Useful for debugging code. Also see the String function str().
+
+Numeric values are rounded to 5 significant digits.
+
+It can be handy to use 'variable=variable' as the expression to easily label the variables, see the example below.
+
+Usage examples:
+
+my_h=50;
+my_r=100;
+echo("This is a cylinder with h=", my_h, " and r=", my_r);
+echo(my_h=my_h,my_r=my_r); // shortcut
+cylinder(h=my_h, r=my_r);
+
+Shows in the Console as
+
+ECHO: "This is a cylinder with h=", 50, " and r=", 100
+ECHO: my_h = 50, my_r = 100
+
+Note that the output will not have the extra double quotes and commas if converted to a string using str().
+Rounding examples
+
+An example for the rounding:
+
+a=1.0;
+b=1.000002;
+echo(a);
+echo(b);
+
+if(a==b){ //while echoed the same, the values are still distinct 
+    echo ("a==b");
+}else if(a>b){
+    echo ("a>b");
+}else if(a<b){
+    echo ("a<b");
+}else{
+    echo ("???");
+}
+
+Small and large Numbers
+
+c=1000002;
+d=0.000002;
+echo(c); //1e+06
+echo(d); //2e-06
+
+HTML
+
+HTML output is not officially supported, however depending on the OpenSCAD version, some HTML tags were rendered in the console window.
+
+Echo Function
+
+[Note: Requires version 2019.05]
+
+Echo can be used in expression context to print information while the function/expression is evaluated. The output is generated before the expression evaluation to allow debugging of recursive functions.
+
+Example
+
+ a = 3; b = 5;
+ 
+ // echo() prints values before evaluating the expression
+ r1 = echo(a, b) a * b; // ECHO: 3, 5
+ 
+ // using let it's still easy to output the result
+ r2 = let(r = 2 * a * b) echo(r) r; // ECHO: 30
+ 
+ // use echo statement for showing results 
+ echo(r1, r2); // ECHO: 15, 30
+
+A more complex example shows how echo() can be used in both descending and ascending path of a recursive function. The result() helper function is a simple way to output the value of an expression after evaluation.
+
+Example printing both input values and result of recursive sum()
+
+ v = [4, 7, 9, 12];
+ function result(x) = echo(result = x) x;
+ function sum(x, i = 0) = echo(str("x[", i, "]=", x[i])) result(len(x) > i ? x[i] + sum(x, i + 1) : 0);
+ echo("sum(v) = ", sum(v));
+ 
+ // ECHO: "x[0]=4"
+ // ECHO: "x[1]=7"
+ // ECHO: "x[2]=9"
+ // ECHO: "x[3]=12"
+ // ECHO: "x[4]=undef"
+ // ECHO: result = 0
+ // ECHO: result = 12
+ // ECHO: result = 21
+ // ECHO: result = 28
+ // ECHO: result = 32
+ // ECHO: "sum(v) = ", 32

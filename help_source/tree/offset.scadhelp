@@ -1,0 +1,53 @@
+offset
+
+[Note: Requires version 2015.03]
+
+Offset generates a new 2d interior or exterior outline from an existing outline. There are two modes of operation. radial and offset. The offset method creates a new outline who's sides are a fixed distance outer (delta > 0) or inner (delta < 0) from the original outline. The radial method creates a new outline as if a circle of some radius is rotated around the exterior (r>0) or interior (r<0) original outline.
+
+The construction methods can either produce an outline that is interior or exterior to the original outline. For exterior outlines the corners can be given an optional chamfer.
+
+Offset is useful for making thin walls by subtracting a negative-offset construction from the original, or the original from a Positive offset construction.
+
+Offset can be used to simulate some common solid modeling operations:
+
+    Fillet: offset(r=-3) offset(delta=+3) rounds all inside (concave) corners, and leaves flat walls unchanged. However, holes less than 2*r in diameter vanish.
+    Round: offset(r=+3) offset(delta=-3) rounds all outside (convex) corners, and leaves flat walls unchanged. However, walls less than 2*r thick vanish.
+
+Parameters
+
+r
+    Double. Amount to offset the polygon. When negative, the polygon is offset inward. R specifies the radius of the circle that is rotated about the outline, either inside or outside. This mode produces rounded corners.
+delta
+    Double. Amount to offset the polygon. Delta specifies the distance of the new outline from the original outline, and therefore reproduces angled corners. When negative, the polygon is offset inward. No inward perimeter is generated in places where the perimeter would cross itself.
+chamfer
+    Boolean. (default false) When using the delta parameter, this flag defines if edges should be chamfered (cut off with a straight line) or not (extended to their intersection).
+
+Positive r/delta value
+Negative r/delta value
+Result for different parameters. The black polygon is the input for the offset() operation.
+
+Examples
+Example 1: Result.
+
+// Example 1
+ 
+linear_extrude(height = 60, twist = 90, slices = 60) {
+   difference() {
+     offset(r = 10) {
+      square(20, center = true);
+     }
+     offset(r = 8) {
+       square(20, center = true);
+     }
+   }
+ }
+
+// Example 2
+ 
+module fillet(r) {
+   offset(r = -r) {
+     offset(delta = r) {
+       children();
+     }
+   }
+}

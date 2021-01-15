@@ -1,0 +1,6 @@
+OpenSCAD Version
+
+version() and version_num() returns the OpenSCAD version number.
+
+    The version() function returns the OpenSCAD version as a vector, e.g. [2011, 09, 23]
+    The version_num() function returns the OpenSCAD version as a number, e.g. 20110923

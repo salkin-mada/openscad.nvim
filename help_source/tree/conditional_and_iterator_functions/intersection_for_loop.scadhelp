@@ -1,0 +1,30 @@
+Intersection For Loop
+
+Iterate over the values in a range or vector and create the intersection of objects created by each pass.
+
+Besides creating separate instances for each pass, the standard for() also groups all these instances creating an implicit union. intersection_for() is a work around because the implicit union prevents getting the expected results using a combination of the standard for() and intersection() statements.
+
+intersection_for() uses the same parameters, and works the same as a For Loop, other than eliminating the implicit union.
+
+example 1 - loop over a range:
+
+intersection_for(n = [1 : 6])
+{
+    rotate([0, 0, n * 60])
+    {
+        translate([5,0,0])
+        sphere(r=12);
+    }
+}
+
+
+example 2 - rotation :
+
+ intersection_for(i = [ [  0,  0,   0],
+ 			[ 10, 20, 300],
+ 			[200, 40,  57],
+ 			[ 20, 88,  57] ])
+{
+    rotate(i)
+    cube([100, 20, 20], center = true);
+}

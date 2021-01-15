@@ -1,0 +1,23 @@
+Basic concept
+
+Transformation affect the child nodes and as the name implies transforms them in various ways such as moving/rotating or scaling the child. Cascading transformations are used to apply a variety of transforms to a final child. Cascading is achieved by nesting statements i.e.
+
+rotate([45,45,45])
+  translate([10,20,30])
+    cube(10);
+
+Transformations can be applied to a group of child nodes by using '{' and '}' to enclose the subtree e.g.
+
+translate([0,0,-5])
+{
+    cube(10);
+    cylinder(r=5,h=10);
+}
+
+Transformations are written before the object they affect.
+
+Imagine commands like translate, mirror and scale as verbs. Commands like color are like adjectives that describe the object.
+
+Notice that there is no semicolon following transformation command.
+Advanced concept
+As OpenSCAD uses different libraries to implement capabilities this can introduce some inconsistencies to the F5 preview behaviour of transformations. Traditional transforms (translate, rotate, scale, mirror & multimatrix) are performed using OpenGL in preview, while other more advanced transforms, such as resize, perform a CGAL operation, behaving like a CSG operation affecting the underlying object, not just transforming it. In particular this can affect the display of modifier characters, specifically "#" and "%", where the highlight may not display intuitively, such as highlighting the pre-resized object, but highlighting the post-scaled object. 

@@ -1,0 +1,25 @@
+min
+
+Returns the minimum of the parameters. If a single vector is given as parameter, returns the minimum element of that vector.
+
+Parameters
+
+min(n,n{,n}...)
+min(vector)
+
+<n>
+    Two or more decimals
+<vector>
+    Single vector of decimals [Note: Requires version 2014.06].
+
+Usage Example:
+
+min(3.0,5.0)
+min(8.0,3.0,4.0,5.0)
+min([8,3,4,5])
+
+Results:
+
+3
+3
+3

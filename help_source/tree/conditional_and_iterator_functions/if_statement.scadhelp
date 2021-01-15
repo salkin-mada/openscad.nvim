@@ -1,0 +1,75 @@
+If Statement
+
+Performs a test to determine if the actions in a sub scope should be performed or not.
+
+if (test) scope1
+if (test){scope1}
+if (test) scope1  else  scope2
+if (test){scope1} else {scope2}
+
+    Parameters
+
+        test: Usually a boolean expression, but can be any value or variable.
+
+            See here for true or false state of values.
+            See here for boolean and logical operators
+            Do not confuse the assignment operator '=' with the equal operator '=='
+
+        scope1: one or more actions to take when test is true.
+        scope2: one or more actions to take when test is false.
+
+if (b==a)  cube(4);
+if (b<a)  {cube(4); cylinder(6);}
+if (b&&a) {cube(4); cylinder(6);}
+if (b!=a)  cube(4); else cylinder(3);
+if (b)    {cube(4); cylinder(6);} else {cylinder(10,5,5);} 
+if (!true){cube(4); cylinder(6);} else  cylinder(10,5,5); 
+if (x>y)   cube(1, center=false); else {cube(size = 2, center = true);}
+if (a==4) {}                      else  echo("a is not 4");
+if ((b<5)&&(a>8))  {cube(4);}     else {cylinder(3);}
+if (b<5&&a>8)       cube(4);      else  cylinder(3);
+
+Since 2015.03 variables can now be assigned in any scope. Note that assignments are only valid within the scope in which they are defined - you are still not allowed to leak values to an outer scope. See Scope of variables for more details.
+
+    Nested if
+
+The scopes of both the if() portion and the else portion, can in turn contain if() statements. This nesting can be to many depths.
+
+ if (test1) 
+ {
+   scope1 if (test2) {scope2.1}
+          else {scope2.2}
+ }
+ else
+{
+  scope2 if (test3) {scope3.1}
+         else {scope3.2}
+}
+
+When scope1 and scope2 contain only the if() statement, the outer sets of braces can be removed.
+
+ if (test1)
+   if (test2) {scope2.1}
+   else {scope2.2}
+ else
+   if (test3) {scope3.1}
+   else {scope3.2}
+
+One evolution is this:
+else if
+
+      if(test1) {scope1}
+ else if(test2) {scope2}
+ else if(test3) {scope3}
+ else if(test4) {scope4}
+ else           {scope5}
+
+Note that else and if are two separate words. When working down the chain of tests, the first true uses its scope. All further tests are skipped.
+
+example
+
+if((k<8)&&(m>1)) cube(10);
+else if(y==6)   {sphere(6);cube(10);}
+else if(y==7)    color("blue")sphere(5);
+else if(k+m!=8) {cylinder(15,5,0);sphere(8);}
+else             color("green"){cylinder(12,5,0);sphere(8);}

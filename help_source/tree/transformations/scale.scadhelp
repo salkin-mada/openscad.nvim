@@ -1,0 +1,11 @@
+scale
+
+Scales its child elements using the specified vector. The argument name is optional.
+
+Usage Example:
+scale(v = [x, y, z]) { ... }
+
+cube(10);
+translate([15,0,0]) scale([0.5,1,2]) cube(10);
+
+Image showing result of scale() transformation in OpenSCAD 

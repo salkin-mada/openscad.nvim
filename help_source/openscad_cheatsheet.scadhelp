@@ -1,0 +1,121 @@
+/* 2D */
+circle(radius|d=diameter)
+square(size,center)
+square([width,height],center)
+polygon([points])
+polygon([points],[paths])
+text(t,size,font,
+	halign,valign,spacing,
+	direction,language,script)
+/* 3D */
+sphere(radius|d=diameter)
+cube(size,center)
+cube([width,depth,height],center)
+cylinder(h,r|d,center)
+cylinder(h,r1|d1,r1|d2,center)
+polyhedron(points,triangles,convexity)
+
+/* Boolean Operations */
+union()
+difference()
+intersection()
+assert(condition, string);
+
+/* Transformations */
+translate([x,y,z])
+rotate([x,y,z])
+scale([x,y,z])
+resize([x,y,z],auto)
+mirror([x,y,z])
+multmatrix(m)
+color("colorname")
+color([r,g,b,a])
+offset(r|delta,chamfer)
+hull()
+minkowski()
+
+/* Mathematical Operators */
+abs
+sign
+sin
+cos
+tan
+acos
+asin
+atan
+atan2
+floor
+round
+ceil
+ln
+len
+log
+pow
+sqrt
+exp
+rands
+min
+max
+
+/* Functions */
+concat
+lookup
+str
+chr
+ord
+search
+version
+version_num
+norm
+cross
+parent_module(idx)
+
+/* Modifier Characters */
+* disable
+! show only
+# highlight /debug
+% transparent / background
+
+/* Other */
+let(…)
+echo(…)
+for (i = [start:end]) { … }
+for (i = [start:step:end]) { … }
+for (i = [start,step,end]) { … }
+intersection_for (i = [start:end]) { … }
+intersection_for (i = [start:step:end]) { … }
+intersection_for (i = [start,step,end]) { … }
+if (…) { … }
+import("….stl")
+linear_extrude(height,center,convexity,twist,slices)
+rotate_extrude(angle,convexity)
+surface(file = "….dat",center,convexit
+projection(cut)
+render(convexity)
+children([idx])
+assign() // deprecated
+
+/* List Comprehensions */
+Generate [ for (i = range|list) i ]
+Conditions [ for (i = …) if (condition(i)) i ]
+Assignments [ for (i = …) let (assignments) a ]
+
+/* Special variables */
+$fa 		// minimum angle
+$fs 		// minimum size
+$fn 		// number of fragments
+$t 			// animation step
+$vpr 		// viewport rotation angles in degrees
+$vpt 		// viewport translation
+$vpd 		// viewport camera distance
+$children 	// number of module children
+$parent_modules // number of modules in the instantiation stack
+
+/* Syntax */
+var = value;
+module name(…) { … }
+	name();
+function name(…) = …
+	name();
+include <….scad>
+use <….scad>

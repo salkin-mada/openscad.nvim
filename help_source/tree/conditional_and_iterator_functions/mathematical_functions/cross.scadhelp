@@ -1,0 +1,20 @@
+cross
+
+Calculates the cross product of two vectors in 3D or 2D space. If both vectors are in the 3D, the result is a vector that is perpendicular to both of the input vectors. If both vectors are in 2D space, their cross product has the form [0,0,z] and the cross function returns just the z value of the cross product:
+
+cross([x,y], [u,v]) = x*v - y*u
+
+Note that this is the determinant of the 2x2 matrix [[x,y],[u,v]]. Using any other types, vectors with lengths different from 2 or 3, or vectors not of the same length produces 'undef'.
+
+Usage examples:
+
+echo(cross([2, 3, 4], [5, 6, 7]));     // produces ECHO: [-3, 6, -3]
+echo(cross([2, 1, -3], [0, 4, 5]));    // produces ECHO: [17, -10, 8]
+echo(cross([2, 1], [0, 4]));           // produces ECHO: 8
+echo(cross([1, -3], [4, 5]));          // produces ECHO: 17
+echo(cross([2, 1, -3], [4, 5]));       // produces ECHO: undef
+echo(cross([2, 3, 4], "5"));           // produces ECHO: undef
+
+For any two vectors a and b in 2D or in 3D, the following holds:
+
+cross(a,b) == -cross(b,a) 

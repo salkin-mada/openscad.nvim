@@ -1,0 +1,111 @@
+
+Vectors
+
+A vector or list is a sequence of zero or more OpenSCAD values. Vectors are a collection of numeric or boolean values, variables, vectors, strings or any combination thereof. They can also be expressions which evaluate to one of these. Vectors handle the role of arrays found in many imperative languages. The information here also applies to lists and tables which use vectors for their data.
+
+A vector has square brackets, [] enclosing zero or more items (elements or members), separated by commas. A vector can contain vectors, which contain vectors, etc.
+
+
+    examples
+
+   [1,2,3]
+   [a,5,b]
+   []
+   [5.643]
+   ["a","b","string"]
+   [[1,r],[x,y,z,4,5]]
+   [3, 5, [6,7], [[8,9],[10,[11,12],13], c, "string"]
+   [4/3, 6*1.5, cos(60)]
+
+use in OpenSCAD:
+
+  cube( [width,depth,height] );           // optional spaces shown for clarity
+  translate( [x,y,z] )
+  polygon( [ [x0,y0],  [x1,y1],  [x2,y2] ] );
+
+    creation
+
+Vectors are created by writing the list of elements, separated by commas, and enclosed in square brackets. Variables are replaced by their values.
+
+  cube([10,15,20]);
+  a1 = [1,2,3];
+  a2 = [4,5];
+  a3 = [6,7,8,9];
+  b  = [a1,a2,a3];    // [ [1,2,3], [4,5], [6,7,8,9] ]  note increased nesting depth
+
+Indexing elements within vectors
+
+Elements within vectors are numbered from 0 to n-1 where n is the length returned by len(). Address elements within vectors with the following notation:
+
+e[5]           // element no 5 (sixth) at   1st nesting level
+e[5][2]        // element 2 of element 5    2nd nesting level
+e[5][2][0]     // element 0 of 2 of 5       3rd nesting level
+e[5][2][0][1]  // element 1 of 0 of 2 of 5  4th nesting level
+
+example elements with lengths from len()
+
+e = [ [1], [], [3,4,5], "string", "x", [[10,11],[12,13,14],[[15,16],[17]]] ];  // length 6
+
+address       length  element
+e[0]          1       [1]
+e[1]          0       []
+e[5]          3       [ [10,11], [12,13,14], [[15,16],[17]] ]
+e[5][1]       3       [ 12, 13, 14 ]
+e[5][2]       2       [ [15,16], [17] ]
+e[5][2][0]    2       [ 15, 16 ]
+e[5][2][0][1] undef   16
+    
+e[3]          6       "string"
+e[3 ][2]      1       "r"
+  
+s = [2,0,5]; a = 2;
+s[a]          undef   5
+e[s[a]]       3       [ [10,11], [12,13,14], [[15,16],[17]] ]
+
+
+Dot notation indexing
+
+The first three elements of a vector can be accessed with an alternate dot notation:
+
+e.x    //equivalent to e[0]
+e.y    //equivalent to e[1]
+e.z    //equivalent to e[2]
+
+Vector operators
+concat
+
+[Note: Requires version 2015.03]
+
+concat() combines the elements of 2 or more vectors into a single vector. No change in nesting level is made.
+
+ vector1 = [1,2,3]; vector2 = [4]; vector3 = [5,6];
+ new_vector = concat(vector1, vector2, vector3); // [1,2,3,4,5,6]
+  
+ string_vector = concat("abc","def");                 // ["abc", "def"]
+ one_string = str(string_vector[0],string_vector[1]); // "abcdef"
+
+len
+
+len() is a function which returns the length of vectors or strings. Indices of elements are from [0] to [length-1].
+
+    vector
+
+        Returns the number of elements at this level.
+        Single values, which are not vectors, return undef.
+
+    string
+
+        Returns the number of characters in string.
+
+ a = [1,2,3]; echo(len(a));   //  3
+
+See example elements with lengths
+Matrix
+
+A matrix is a vector of vectors.
+
+Example which defines a 2D rotation matrix
+mr = [
+     [cos(angle), -sin(angle)],
+     [sin(angle),  cos(angle)]
+    ];

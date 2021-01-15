@@ -1,0 +1,87 @@
+
+cylinder
+
+Creates a cylinder or cone centered about the z axis. When center is true, it is also centered vertically along the z axis.
+
+Parameter names are optional if given in the order shown here. If a parameter is named, all following parameters must also be named.
+
+NOTE: If r, d, d1 or d2 are used they must be named.
+
+cylinder(h = height, r1 = BottomRadius, r2 = TopRadius, center = true/false);
+
+    Parameters
+
+        h : height of the cylinder or cone
+        r  : radius of cylinder. r1 = r2 = r.
+        r1 : radius, bottom of cone.
+        r2 : radius, top of cone.
+        d  : diameter of cylinder. r1 = r2 = d / 2. [Note: Requires version 2014.03]
+        d1 : diameter, bottom of cone. r1 = d1 / 2. [Note: Requires version 2014.03]
+        d2 : diameter, top of cone. r2 = d2 / 2. [Note: Requires version 2014.03]
+        center
+
+            false (default), z ranges from 0 to h
+            true, z ranges from -h/2 to +h/2
+
+        $fa : minimum angle (in degrees) of each fragment.
+        $fs : minimum circumferential length of each fragment.
+        $fn : fixed number of fragments in 360 degrees. Values of 3 or more override $fa and $fs
+
+            $fa, $fs and $fn must be named parameters. click here for more details,.
+
+defaults: cylinder();  yields: cylinder($fn = 0, $fa = 12, $fs = 2, h = 1, r1 = 1, r2 = 1, center = false);
+
+OpenSCAD Cone 15x10x20.jpg
+
+equivalent scripts
+ cylinder(h=15, r1=9.5, r2=19.5, center=false);
+ cylinder(  15,    9.5,    19.5, false);
+ cylinder(  15,    9.5,    19.5);
+ cylinder(  15,    9.5, d2=39  );
+ cylinder(  15, d1=19,  d2=39  );
+ cylinder(  15, d1=19,  r2=19.5);
+
+OpenSCAD Cone 15x10x0.jpg
+
+equivalent scripts
+ cylinder(h=15, r1=10, r2=0, center=true);
+ cylinder(  15,    10,    0,        true);
+ cylinder(h=15, d1=20, d2=0, center=true);
+
+    center = false
+
+    center = true
+
+equivalent scripts
+ cylinder(h=20, r=10, center=true);
+ cylinder(  20,   10, 10,true);
+ cylinder(  20, d=20, center=true);
+ cylinder(  20,r1=10, d2=20, center=true);
+ cylinder(  20,r1=10, d2=2*10, center=true);
+
+    use of $fn
+
+Larger values of $fn create smoother, more circular, surfaces at the cost of longer rendering time. Some use medium values during development for the faster rendering, then change to a larger value for the final F6 rendering.
+
+However, use of small values can produce some interesting non circular objects. A few examples are show here:
+
+    3 sided fiqure.jpg
+    4 sided pyramid.jpg
+    4 sided part pyramid.jpg
+
+scripts for these examples
+ cylinder(20,20,20,$fn=3);
+ cylinder(20,20,00,$fn=4);
+ cylinder(20,20,10,$fn=4);
+
+    undersized holes
+
+Using cylinder() with difference() to place holes in objects creates undersized holes. This is because circular paths are approximated with polygons inscribed within in a circle. The points of the polygon are on the circle, but straight lines between are inside. To have all of the hole larger than the true circle, the polygon must lie wholly outside of the circle (circumscribed). Modules for circumscribed holes
+
+    OpenSCAD Under size hole.jpg
+
+script for this example
+ poly_n = 6;
+ color("blue") translate([0, 0, 0.02]) linear_extrude(0.1) circle(10, $fn=poly_n);
+ color("green") translate([0, 0, 0.01]) linear_extrude(0.1) circle(10, $fn=360);
+ color("purple") linear_extrude(0.1) circle(10/cos(180/poly_n), $fn=poly_n);

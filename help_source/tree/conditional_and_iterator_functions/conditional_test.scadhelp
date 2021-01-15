@@ -1,0 +1,67 @@
+Conditional ? :
+
+A function that uses a test to determine which of 2 values to return.
+
+ a =   test ? TrueValue : FalseValue ;
+ echo( test ? TrueValue : FalseValue );
+
+    Parameters
+
+        test: Usually a boolean expression, but can be any value or variable.
+
+            See here for true or false state of values.
+            See here for boolean and logical operators
+            Do not confuse assignment '=' with equal '=='
+
+        TrueValue: the value to return when test is true.
+        FalseValue: the value to return when test is false.
+
+                A value in OpenSCAD is either a Number (like 42), a Boolean (like true), a String (like "foo"), a Vector (like [1,2,3]), or the Undefined value (undef). Values can be stored in variables, passed as function arguments, and returned as function results.
+
+This works like the ?: operator from the family of C-like programming languages.
+
+    Examples
+
+ a=1; b=2; c= a==b ? 4 : 5 ;                  //  5
+ a=1; b=2; c= a==b ? "a==b" : "a!=b" ;        //  "a!=b"
+  
+ TrueValue = true; FalseValue = false;
+ a=5; test = a==1;
+ echo( test ? TrueValue : FalseValue );       // false
+  
+ L = 75; R = 2; test = (L/R)>25;
+ TrueValue =  [test,L,R,L/R,cos(30)];
+ FalseValue = [test,L,R,sin(15)];
+ a1 = test ? TrueValue : FalseValue ;         // [true, 75, 2, 37.5, 0.866025]
+
+Some forms of tail-recursion elimination are supported.
+
+Recursive function calls
+
+Recursive function calls are supported. Using the Conditional "... ? ... : ... " it's possible to ensure the recursion is terminated. Note: There is a built-in recursion limit to prevent an application crash. If the limit is hit, the function returns undef.
+
+    example
+
+ // recursion - find the sum of the values in a vector (array) by calling itself
+ // from the start (or s'th element) to the i'th element - remember elements are zero based
+
+ function sumv(v, i, s = 0) = (i == s ? v[i] : v[i] + sumv(v, i-1, s));
+ 
+ vec=[ 10, 20, 30, 40 ];
+ echo("sum vec=", sumv(vec, 2, 1)); // calculates 20+30=50
+
+Formatting complex usage
+
+Multiple nested conditionals can become difficult to understand. Formatting them like multi-line indented "if/else" statements is clearer.
+
+// find the maximum value in a vector
+function maxv(v, m=-999999999999, i=0) = 
+    (i == len(v) ) 
+    ?     m 
+    :     (m > v[i]) 
+          ?    maxv(v, m, i+1) 
+          :    maxv(v, v[i], i+1);
+
+v=[7,3,9,3,5,6];
+echo("max",maxv(v));   // ECHO: "max", 9
+

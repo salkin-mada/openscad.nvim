@@ -1,0 +1,18 @@
+
+Getting input
+
+Now we have variables, it would be nice to be able to get input into them instead of setting the values from code. There are a few functions to read data from DXF files, or you can set a variable with the -D switch on the command line.
+
+Getting a point from a drawing
+
+Getting a point is useful for reading an origin point in a 2D view in a technical drawing. The function dxf_cross reads the intersection of two lines on a layer you specify and returns the intersection point. This means that the point must be given with two lines in the DXF file, and not a point entity.
+
+OriginPoint = dxf_cross(file="drawing.dxf", layer="SCAD.Origin", 
+                        origin=[0, 0], scale=1);
+
+Getting a dimension value
+
+You can read dimensions from a technical drawing. This can be useful to read a rotation angle, an extrusion height, or spacing between parts. In the drawing, create a dimension that does not show the dimension value, but an identifier. To read the value, you specify this identifier from your program:
+
+TotalWidth = dxf_dim(file="drawing.dxf", name="TotalWidth",
+                        layer="SCAD.Origin", origin=[0, 0], scale=1);

@@ -1,0 +1,12 @@
+Comments are a way of leaving notes within the script, or code, (either to yourself or to future programmers) describing how the code works, or what it does. Comments are not evaluated by the compiler, and should not be used to describe self-evident code.
+
+OpenSCAD uses C++-style comments:
+
+// This is a comment
+  
+myvar = 10; // The rest of the line is a comment
+  
+/*
+   Multi-line comments
+   can span multiple lines.
+*/

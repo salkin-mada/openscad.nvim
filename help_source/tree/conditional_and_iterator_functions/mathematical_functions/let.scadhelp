@@ -1,0 +1,14 @@
+let
+
+[Note: Requires version 2015.03]
+
+Sequential assignment of variables inside an expression. The following expression is evaluated in context of the let assignments and can use the variables. This is mainly useful to make complicated expressions more readable by assigning interim results to variables.
+
+Parameters
+
+let (var1 = value1, var2 = f(var1), var3 = g(var1, var2)) expression
+
+Usage Example:
+
+echo(let(a = 135, s = sin(a), c = cos(a)) [ s, c ]); // ECHO: [0.707107, -0.707107]
+

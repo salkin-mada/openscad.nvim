@@ -1,0 +1,98 @@
+Variables
+
+OpenSCAD variables are created by a statement with a name or identifier, assignment via an expression and a semicolon. The role of arrays, found in many imperative languages, is handled in OpenSCAD via vectors.
+
+var = 25;
+xx = 1.25 * cos(50);
+y = 2*xx+var;
+logic = true;
+MyString = "This is a string";
+a_vector = [1,2,3];
+rr = a_vector[2];      // member of vector
+range1 = [-1.5:0.5:3]; // for() loop range
+xx = [0:5];            // alternate for() loop range
+
+OpenSCAD is a Functional programming language, as such variables are bound to expressions and keep a single value during their entire lifetime due to the requirements of referential transparency. In imperative languages, such as C, the same behavior is seen as constants, which are typically contrasted with normal variables.
+
+In other words OpenSCAD variables are more like constants, but with an important difference. If variables are assigned a value multiple times, only the last assigned value is used in all places in the code. See further discussion at Variables are set at compile-time, not run-time. This behavior is due to the need to supply variable input on the command line, via the use of -D variable=value option. OpenSCAD currently places that assignment at the end of the source code, and thus must allow a variable's value to be changed for this purpose.
+
+Values cannot be modified during run time; all variables are effectively constants that do not change. Each variable retains its last assigned value at compile time, in line with Functional programming languages. Unlike Imperative languages, such as C, OpenSCAD is not an iterative language, and as such the concept of x = x + 1 is not valid. Understanding this concept leads to understanding the beauty of OpenSCAD.
+
+    Before version 2015.03
+
+It was not possible to do assignments at any place except the file top-level and module top-level. Inside an if/else  or for  loop, assign() was needed.
+
+    Since version 2015.03
+
+Variables can now be assigned in any scope. Note that assignments are only valid within the scope in which they are defined - you are still not allowed to leak values to an outer scope. See Scope of variables for more details.
+
+a=0;
+if (a==0) 
+  {
+ a=1; //  before 2015.03 this line would generate a Compile Error
+      //  since 2015.03  no longer an error, but the value a=1 is confined to within the braces {}
+  }
+
+Undefined variable
+
+A non assigned variable has the special value undef. It could be tested in conditional expression, and returned by a function.
+
+ Example
+  
+ echo("Variable a is ", a);                // Variable a is undef
+ if (a==undef) {
+   echo("Variable a is tested undefined"); // Variable a is tested undefined
+ }
+
+Scope of variables
+
+When operators such as translate() and color() need to encompass more than one action ( actions end in ;), braces {} are needed to group the actions, creating a new, inner scope. When there is only one semicolon, braces are usually optional.
+
+Each pair of braces creates a new scope inside the scope where they were used. Since 2015.03, new variables can be created within this new scope. New values can be given to variables which were created in an outer scope . These variables and their values are also available to further inner scopes created within this scope, but are not available to any thing outside this scope. Variables still have only the last value assigned within a scope.
+
+                       // scope 1
+ a = 6;                // create a
+ echo(a,b);            //                6, undef
+ translate([5,0,0]){   // scope 1.1
+   a= 10;
+   b= 16;              // create b
+   echo(a,b);          //              100, 16   a=10; was overridden by later a=100;
+   color("blue") {     // scope 1.1.1
+     echo(a,b);        //              100, 20
+     cube();
+     b=20;
+   }                   // back to 1.1
+   echo(a,b);          //              100, 16
+   a=100;              // override a in 1.1
+ }                     // back to 1   
+ echo(a,b);            //                6, undef
+ color("red"){         // scope 1.2
+   cube();
+   echo(a,b);          //                6, undef
+ }                     // back to 1
+ echo(a,b);            //                6, undef
+  
+ //In this example, scopes 1 and 1.1 are outer scopes to 1.1.1 but 1.2 is not.
+
+    Anonymous scopes are not considered scopes:
+
+ {
+   angle = 45;
+ }
+ rotate(angle) square(10);
+
+For() loops are not an exception to the rule about variables having only one value within a scope. A copy of loop contents is created for each pass. Each pass is given its own scope, allowing any variables to have unique values for that pass. No, you still can't do a=a+1;
+Variables are set at compile-time, not run-time
+
+Because OpenSCAD calculates its variable values at compile-time, not run-time, the last variable assignment, within a scope apply everywhere in that scope, or inner scopes thereof. It may be helpful to think of them as override-able constants rather than as variables.
+
+// The value of 'a' reflects only the last set value
+   a = 0;
+   echo(a);  // 5
+   a = 3;
+   echo(a);  // 5
+   a = 5;
+
+While this appears to be counter-intuitive, it allows you to do some interesting things: for instance, if you set up your shared library files to have default values defined as variables at their root level, when you include that file in your own code, you can 're-define' or override those constants by simply assigning a new value to them.
+Special Variables
+Special variables provide an alternate means of passing arguments to modules and functions. All variables starting with a '$' are special variables, similar to special variables in lisp. As such they are more dynamic than regular variables. (for more details see Other Language Features) 

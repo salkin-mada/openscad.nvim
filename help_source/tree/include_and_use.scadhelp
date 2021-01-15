@@ -1,0 +1,115 @@
+Use and Include
+
+For including code from external files in OpenSCAD, there are two commands available:
+
+    include <filename> acts as if the contents of the included file were written in the including file, and
+    use <filename> imports modules and functions, but does not execute any commands other than those definitions.
+
+Library files are searched for in the same folder as the design was open from, or in the library folder of the OpenSCAD installation. You can use a relative path specification to either. If they lie elsewhere you must give the complete path. Newer versions have predefined user libraries, see the OpenSCAD_User_Manual/Libraries page, which also documents a number of library files included in OpenSCAD.
+
+//Wildcards (*, for e.g. include <MCAD/*.scad>) can not be used to include multiple files.
+
+Directory separators
+
+Windows and Linux/Mac use different separators for directories. Windows uses \, e.g. directory\file.ext, while the others use /, e.g. directory/file.ext. This could lead to cross platform issues. However OpenSCAD on Windows correctly handles the use of /, so using / in all include or use statements work on all platforms.
+
+To access the parent directory ../ can be used under Linux.
+Variables
+Scope of variables
+
+Using include <filename> allows default variables to be specified in the library. These defaults can be overridden in the main code. An OpenSCAD variable has only one value during the life of the program. When there are multiple assignments it takes the last value, but assigns when the variable is first created. This has an effect when assigning in a library, as any variables that you later use to change the default, must be assigned before the include statement. See the second example below.
+Overwriting variables
+
+Default variables in an include can be overridden, for example
+
+lib.scad
+
+i=1;
+k=3;
+module x() {
+    echo("hello world");
+    echo("i=",i,"j=",j,"k=",k);
+}
+
+hello.scad
+
+j=4;
+include <lib.scad>;
+x();
+i=5;
+x();
+k=j;
+x();
+
+Produces the following
+
+ECHO: "hello world"
+ECHO: "i=", 5, "j=", 4, "k=", 4
+ECHO: "hello world"
+ECHO: "i=", 5, "j=", 4, "k=", 4
+ECHO: "hello world"
+ECHO: "i=", 5, "j=", 4, "k=", 4
+
+However, placing j=4; after the include fails, producing
+
+ECHO: "hello world"
+ECHO: "i=", 5, "j=", 4, "k=", undef
+ECHO: "hello world"
+ECHO: "i=", 5, "j=", 4, "k=", undef
+ECHO: "hello world"
+ECHO: "i=", 5, "j=", 4, "k=", undef
+
+Example "Ring-Library"
+
+A library file for generating rings might look like this (defining a function and providing an example):
+
+ring.scad:
+
+module ring(r1, r2, h) {
+    difference() {
+        cylinder(r = r1, h = h);
+        translate([ 0, 0, -1 ]) cylinder(r = r2, h = h+2);
+    }
+}
+
+ring(5, 4, 10);
+
+Including the library using
+
+include <ring.scad>;
+rotate([90, 0, 0]) ring(10, 1, 1);
+
+would result in the example ring being shown in addition to the rotated ring, but
+
+use <ring.scad>;
+rotate([90, 0, 0]) ring(10, 1, 1);
+
+shows only the rotated ring.
+
+If using the use function, make sure to place the use statements at top of the file, or at least not within a module!
+
+This works fine:
+
+ // a.scad
+ use <ring.scad>;
+ module a() {
+   ring();
+ }
+
+but this results in an syntax error:
+
+ //a.scad
+ module a() {
+   use <ring.scad>;
+   ring();
+ }
+
+
+Nested Include and Use
+
+OpenSCAD executes nested calls to include and use. There is one caveat to this, that use brings functions and modules only into the local file context. As a result, nested calls to use have no effect on the environment of the base file; the child use call works in the parent use context, but the modules and functions so imported fall out of context before they are seen by the base context.
+	The text in its current form is incomplete.
+
+Importing is achieved by the import() command.
+
+[Note: Requires version 2015.03-2] The File >> Open command may be used to insert this command. The file type filter of the Open File dialog may show only OpenSCAD files, but file name can be replaced with a wildcard (e.g. *.stl) to browse to additional file types. 

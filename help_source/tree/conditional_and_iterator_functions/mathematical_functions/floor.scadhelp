@@ -1,0 +1,5 @@
+floor
+
+Mathematical floor function. floor(x) = is the largest integer not greater than x
+
+echo(floor(4.4),floor(-4.4));    // produces ECHO: 4, -5

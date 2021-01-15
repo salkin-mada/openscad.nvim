@@ -1,0 +1,21 @@
+round
+
+The "round" operator returns the greatest or least integer part, respectively, if the numeric input is positive or negative.
+
+Some examples:
+
+round(x.5) = x+1.
+
+round(x.49) = x.
+
+round(-(x.5)) = -(x+1).
+
+round(-(x.49)) = -x.
+
+
+
+round(5.4); //-> 5
+
+round(5.5); //-> 6
+
+round(5.6); //-> 6

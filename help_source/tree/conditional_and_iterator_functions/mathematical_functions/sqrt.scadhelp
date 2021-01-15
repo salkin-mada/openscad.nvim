@@ -1,0 +1,9 @@
+sqrt
+
+Mathematical square root function.
+
+
+Usage Examples:
+
+translate([sqrt(100),0,0])sphere(100);
+

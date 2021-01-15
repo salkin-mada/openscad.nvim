@@ -1,0 +1,16 @@
+tan
+
+Mathematical tangent function.
+
+Parameters
+
+<degrees>
+    Decimal. Angle in degrees.
+
+Usage example:
+
+ for (i = [0:5]) {
+  echo(360*i/6, tan(360*i/6)*80);
+   translate([tan(360*i/6)*80, 0, 0 ])
+    cylinder(h = 200, r=10);
+ }

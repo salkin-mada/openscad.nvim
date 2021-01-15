@@ -1,0 +1,94 @@
+Values and Data Types
+
+A value in OpenSCAD is either a Number (like 42), a Boolean (like true), a String (like "foo"), a Range (like [0: 1: 10]), a Vector (like [1,2,3]), or the Undefined value (undef). Values can be stored in variables, passed as function arguments, and returned as function results.
+
+[OpenSCAD is a dynamically typed language with a fixed set of data types. There are no type names, and no user defined types. Functions are not values. In fact, variables and functions occupy disjoint namespaces.]
+Numbers
+
+Numbers are the most important type of value in OpenSCAD, and they are written in the familiar decimal notation used in other languages. Eg, -1, 42, 0.5, 2.99792458e+8. [OpenSCAD does not support octal or hexadecimal notation for numbers.]
+
+In additional to decimal numerals, the following names for special numbers are defined:
+
+    PI
+
+OpenSCAD has only a single kind of number, which is a 64 bit IEEE floating point number. [OpenSCAD does not distinguish integers and floating point numbers as two different types, nor does it support complex numbers.] Because OpenSCAD uses the IEEE floating point standard, there are a few deviations from the behaviour of numbers in mathematics:
+
+    We use binary floating point. A fractional number is not represented exactly unless the denominator is a power of 2. For example, 0.2 (2/10) does not have an exact internal representation, but 0.25 (1/4) and 0.125 (1/8) are represented exactly.
+    The largest representable number is about 1e308. If a numeric result is too large, then the result can be infinity (printed as inf by echo).
+    The smallest representable number is about -1e308. If a numeric result is too small, then the result can be -infinity (printed as -inf by echo).
+    If a numeric result is invalid, then the result can be Not A Number (printed as nan by echo).
+    If a non-zero numeric result is too close to zero to be representable, then the result is -0 if the result is negative, otherwise it is 0. Zero (0) and negative zero (-0) are treated as two distinct numbers by some of the math operations, and are printed differently by 'echo', although they compare as equal.
+
+The constants 'inf' and 'nan' are not supported as numeric constants by OpenSCAD, even though you can compute numbers that are printed this way by 'echo'. You can define variables with these values by using:
+
+inf = 1e200 * 1e200;
+nan = 0 / 0;
+echo(inf,nan);
+
+The value 'nan' is the only OpenSCAD value that is not equal to any other value, including itself. Although you can test if a variable 'x' has the undefined value using 'x == undef', you can't use 'x == 0/0' to test if x is Not A Number. Instead, you must use 'x != x' to test if x is nan.
+Boolean Values
+
+Booleans are truth values. There are two Boolean values, namely true and false. A Boolean is passed as the argument to conditional statement 'if()'. conditional operator '? :', and logical operators '!' (not), '&&' (and), and '||' (or). In all of these contexts, you can actually pass any quantity. Most values are converted to 'true' in a Boolean context, the values that count as 'false' are:
+
+    false
+    0 and -0
+    ""
+    []
+    undef
+
+Note that "false" (the string), [0] (a numeric vector), [ [] ] (a vector containing an empty vector), [false] (a vector containing the Boolean value false) and 0/0 (Not A Number) all count as true.
+Strings
+
+A string is a sequence of zero or more unicode characters. String values are used to specify file names when importing a file, and to display text for debugging purposes when using echo(). Strings can also be used with the new text() primitive added in 2015.03.
+
+A string literal is written as a sequence of characters enclosed in quotation marks ", like this: "" (an empty string), or "this is a string".
+
+To include a " character in a string literal, use \". To include a \ character in a string literal, use \\. The following escape sequences beginning with \ can be used within string literals:
+
+    \" → "
+    \\ → \
+    \t → tab
+    \n → newline
+    \r → carriage return
+    \u03a9 → Ω - see text() for further information on unicode characters
+
+Note: This behavior is new since OpenSCAD-2011.04. You can upgrade old files using the following sed command: sed 's/\\/\\\\/g' non-escaped.scad > escaped.scad
+
+ Example:
+  
+ echo("The quick brown fox \tjumps \"over\" the lazy dog.\rThe quick brown fox.\nThe \\lazy\\ dog.");
+  
+ result
+
+   ECHO: "The quick brown fox     jumps "over" the lazy dog.
+   The quick brown fox.
+   The \lazy\ dog."
+  
+ old result
+   ECHO: "The quick brown fox \tjumps \"over\" the lazy dog.
+   The quick brown fox.\nThe \\lazy\\ dog."
+
+Ranges
+
+Ranges are used by for() loops and children(). They have 2 varieties:
+
+    [<start>:<end>]
+    [<start>:<increment>:<end>]
+
+Although enclosed in square brackets [] , they are not vectors. They use colons : for separators rather than commas.
+
+r1 = [0:10];
+r2 = [0.5:2.5:20];
+echo(r1); // ECHO: [0: 1: 10]
+echo(r2); // ECHO: [0.5: 2.5: 20]
+
+You should avoid step values that cannot be represented exactly as binary floating point numbers. Integers are okay, as are fractional values whose denominator is a power of two. For example, 0.25 (1/4) and 0.125 (1/8) are safe, but 0.2 (2/10) should be avoided. The problem with these step values is that your range may have too many or too few elements, due to inexact arithmetic.
+
+A missing <increment> defaults to 1. A range in the form [<start>:<end>] with <start> greater than <end> generates a warning and is equivalent to [<end>: 1: <start>]. A range in the form [<start>:1:<end>] with <start> greater than <end> does not generate a warning and is equivalent to []. The <increment> in a range may be negative (for versions after 2014).
+The Undefined Value
+
+The undefined value is a special value written as undef. It's the initial value of a variable that hasn't been assigned a value, and it is often returned as a result by functions or operations that are passed illegal arguments. Finally, undef can be used as a null value, equivalent to null or NULL in other programming languages.
+
+All arithmetic expressions containing undef values evaluate as undef. In logical expressions, undef is equivalent to false. Relational operator expressions with undef evaluate as false except for undef==undef which is true.
+
+Note that numeric operations may also return 'nan' (not-a-number) to indicate an illegal argument. For example, 0/false is undef, but 0/0 is 'nan'. Relational operators like < and > return false if passed illegal arguments. Although undef is a language value, 'nan' is not. 

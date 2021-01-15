@@ -1,0 +1,25 @@
+max
+
+Returns the maximum of the parameters. If a single vector is given as parameter, returns the maximum element of that vector.
+
+Parameters
+
+max(n,n{,n}...)
+max(vector)
+
+<n>
+    Two or more decimals
+<vector>
+    Single vector of decimals [Note: Requires version 2014.06].
+
+Usage Example:
+
+max(3.0,5.0)
+max(8.0,3.0,4.0,5.0)
+max([8,3,4,5])
+
+Results:
+
+5
+8
+8

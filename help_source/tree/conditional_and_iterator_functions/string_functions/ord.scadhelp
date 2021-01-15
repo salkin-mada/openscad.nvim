@@ -1,0 +1,21 @@
+ord
+
+[Note: Requires version 2019.05]
+
+Convert a character to a number representing the Unicode code point. If the parameter is not a string, the ord() returns undef.
+
+Parameters
+
+ord(String)
+    Convert the first character of the given string to a Unicode code point.
+
+Examples
+
+echo(ord("a"));
+// ECHO: 97
+
+echo(ord("BCD"));
+// ECHO: 66
+
+echo([for (c = "Hello! 🙂") ord(c)]);
+// ECHO: [72, 101, 108, 108, 111, 33, 32, 128578]

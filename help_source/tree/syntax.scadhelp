@@ -1,0 +1,34 @@
+Syntax / Introduction
+
+OpenSCAD is a 2D/3D and solid modeling program which is based on a Functional programming language used to create models that are previewed on the screen, and rendered into 3D mesh which allows the model to be exported in a variety of 2D/3D file formats.
+
+A script in the OpenSCAD language is used to create 2D or 3D models. This script is a free format list of action statements.
+
+ object();
+ variable = value;
+ operator()   action();
+ operator() { action();    action(); }
+ operator()   operator() { action(); action(); }
+ operator() { operator()   action();
+              operator() { action(); action(); } }
+
+    Objects
+
+Objects are the building blocks for models, created by 2D and 3D primitives. Objects end in a semicolon ';'.
+
+    Actions
+
+Action statements include creating objects using primitives and assigning values to variables. Action statements also end in a semicolon ';'.
+
+    Operators
+
+Operators, or transformations, modify the location, color and other properties of objects. Operators use braces '{}' when their scope covers more than one action. More than one operator may be used for the same action or group of actions. Multiple operators are processed Right to Left, that is, the operator closest to the action is processed first. Operators do not end in semicolons ';', but the individual actions they contain do.
+
+ Examples
+  
+   cube(5);
+   x = 4+y;
+   rotate(40) square(5,10);
+   translate([10,5]) { circle(5); square(4); }
+   rotate(60) color("red") { circle(5); square(4); }
+   color("blue") { translate([5,3,0]) sphere(5); rotate([45,0,45]) { cylinder(10); cube([5,6,7]); } }

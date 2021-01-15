@@ -1,0 +1,28 @@
+hull
+Two cylinders
+Convex hull of two cylinders
+
+Displays the convex hull of child nodes.
+
+Usage example:
+
+hull() {
+    translate([15,10,0]) circle(10);
+    circle(10);
+}
+
+The Hull of 2D objects uses their projections (shadows) on the xy plane, and produces a result on the xy plane. Their Z-height is not used in the operation.
+Combining transformations
+
+When combining transformations, it is a sequential process, but going right-to-left. That is
+
+ rotate( ... ) translate ( ... ) cube(5) ;
+
+would first move the cube, and then move in an arc (turning it the same amount) at the radius given by the translation.
+
+ translate ( ... ) rotate( ... ) cube(5) ;
+
+would first turn the cube and place it at the offset defined by the translate.
+
+color("red")   translate([0,10,0])  rotate([45,0,0])     cube(5);
+color("green") rotate([45,0,0])     translate([0,10,0])  cube(5);

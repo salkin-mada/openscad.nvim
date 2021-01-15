@@ -1,0 +1,5 @@
+exp
+
+Mathematical exp function. Returns the base-e exponential function of x, which is the number e raised to the power x. See: Exponent
+
+echo(exp(1),exp(ln(3)*4));    // produces ECHO: 2.71828, 81

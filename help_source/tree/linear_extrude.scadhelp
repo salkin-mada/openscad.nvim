@@ -1,0 +1,116 @@
+Linear Extrude
+
+Linear Extrusion is a operation that takes a 2D object as input and generates a 3D object as a result.
+
+In OpenSCAD Extrusion is always performed on the projection (shadow) of the 2d object xy plane and along the Z axis; so if you rotate or apply other transformations to the 2d object before extrusion, its shadow shape is what is extruded.
+
+Although the extrusion is linear along the Z axis, a twist parameter is available that causes the object to be rotated around the Z axis as it is extruding upward. This can be used to rotate the object at it's center, as if it is a spiral pillar, or produce a helical extrusion around the Z axis, like a pig's tail.
+
+A scale parameter is also included so that the object can be expanded or contracted over the extent of the extrusion, allowing extrusions to be flared inward or outward.
+Usage
+
+linear_extrude(height = fanwidth, center = true, convexity = 10, twist = -fanrot, slices = 20, scale = 1.0, $fn = 16) {...}
+
+You must use parameter names due to a backward compatibility issue.
+
+height must be positive.
+
+$fn is optional and specifies the resolution of the linear_extrude (higher number brings more "smoothness", but more computation time is needed).
+
+If the extrusion fails for a non-trivial 2D shape, try setting the convexity parameter (the default is not 10, but 10 is a "good" value to try). See explanation further down.
+Twist
+
+Twist is the number of degrees of through which the shape is extruded. Setting the parameter twist = 360 extrudes through one revolution. The twist direction follows the left hand rule.
+
+twist = 0
+
+0° of Twist
+
+linear_extrude(height = 10, center = true, convexity = 10, twist = 0)
+translate([2, 0, 0])
+circle(r = 1);
+
+twist = -100
+
+-100° of Twist
+
+linear_extrude(height = 10, center = true, convexity = 10, twist = -100)
+translate([2, 0, 0])
+circle(r = 1);
+
+twist = 100
+
+100° of Twist
+
+linear_extrude(height = 10, center = true, convexity = 10, twist = 100)
+translate([2, 0, 0])
+circle(r = 1);
+
+twist = -500
+
+-500° of Twist
+
+linear_extrude(height = 10, center = true, convexity = 10, twist = -500)
+translate([2, 0, 0])
+circle(r = 1);
+
+Center
+
+It is similar to the parameter center of cylinders. If center is false the linear extrusion Z range is from 0 to height; if it is true, the range is from -height/2 to height/2.
+
+
+center = true
+
+center = true
+
+linear_extrude(height = 10, center = true, convexity = 10, twist = -500)
+translate([2, 0, 0])
+circle(r = 1);
+
+
+center = false
+
+center = false
+
+linear_extrude(height = 10, center = false, convexity = 10, twist = -500)
+translate([2, 0, 0])
+circle(r = 1);
+
+Mesh Refinement
+
+The slices parameter defines the number of intermediate points along the Z axis of the extrusion. Its default increases with the value of twist. Explicitly setting slices may improve the output refinement.
+
+slices = 100
+
+linear_extrude(height = 10, center = false, convexity = 10, twist = 360, slices = 100)
+translate([2, 0, 0])
+circle(r = 1);
+
+The special variables $fn, $fs and $fa can also be used to improve the output. If slices is not defined, its value is taken from the defined $fn value.
+
+$fn = 100
+
+linear_extrude(height = 10, center = false, convexity = 10, twist = 360, $fn = 100)
+translate([2, 0, 0])
+circle(r = 1);
+
+Scale
+
+Scales the 2D shape by this value over the height of the extrusion. Scale can be a scalar or a vector:
+
+ linear_extrude(height = 10, center = true, convexity = 10, scale=3)
+ translate([2, 0, 0])
+ circle(r = 1);
+
+OpenScad linear_extrude scale example
+
+ linear_extrude(height = 10, center = true, convexity = 10, scale=[1,5], $fn=100)
+ translate([2, 0, 0])
+ circle(r = 1);
+
+OpenScad linear_extrude scale example2
+
+Note that if scale is a vector, the resulting side walls may be nonplanar. Use twist=0 and the slices parameter to avoid asymmetry.
+
+ linear_extrude(height=10, scale=[1,0.1], slices=20, twist=0)
+ polygon(points=[[0,0],[20,10],[20,-10]]);

@@ -1,0 +1,13 @@
+Infinities and NaNs
+
+How does OpenSCAD deal with inputs like (1/0)? Basically, the behavior is inherited from the language OpenSCAD was written in, the C++ language, and its floating point number types and the associated C math library. This system allows representation of both positive and negative infinity by the special values "Inf" or "-Inf". It also allow representation of creatures like sqrt(-1) or 0/0 as "NaN", an abbreviation for "Not A Number". Some very nice explanations can be found on the web, for example the Open Group's site on math.h or Wikipedia's page on the IEEE 754 number format. However OpenSCAD is it's own language so it may not exactly match everything that happens in C. For example, OpenSCAD uses degrees instead of radians for trigonometric functions. Another example is that sin() does not throw a "domain error" when the input is 1/0, although it does return NaN.
+
+Here are some examples of infinite input to OpenSCAD math functions and the resulting output, taken from OpenSCAD's regression test system in late 2015. 
+
+  0/0 = nan  |    sin(1/0) = nan  | 	   asin(1/0) = nan | 		ln(1/0) = inf  | 	round(1/0) = inf  |
+ -0/0 = nan  |    cos(1/0) = nan  | 	   acos(1/0) = nan | 	   ln(-1/0) = nan  |   round(-1/0) = -inf |
+ 0/-0 = nan  |    tan(1/0) = nan  | 	   atan(1/0) = 90  | 	   log(1/0) = inf  | 	 sign(1/0) =  1   |
+  1/0 = inf  |  ceil(-1/0) = -inf | 	  atan(-1/0) = -90 | 	  log(-1/0) = nan  | 	sign(-1/0) = -1   |
+ 1/-0 = -inf |   ceil(1/0) = inf  | atan2(1/0, -1/0) = 135 | max(-1/0, 1/0) = inf  | 	 sqrt(1/0) = inf  |
+ -1/0 = -inf | floor(-1/0) = -inf | 	    exp(1/0) = inf | min(-1/0, 1/0) = -inf | 	sqrt(-1/0) = nan  |
+-1/-0 = inf  |  floor(1/0) = inf  | 	   exp(-1/0) = 0   |  	pow(2, 1/0) = inf  | pow(2, -1/0)  = 0    |

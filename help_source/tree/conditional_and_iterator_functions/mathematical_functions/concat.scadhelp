@@ -1,0 +1,23 @@
+concat
+
+[Note: Requires version 2015.03]
+
+Return a new vector that is the result of appending the elements of the supplied vectors.
+
+Where an argument is a vector the elements of the vector are individually appended to the result vector. Strings are distinct from vectors in this case.
+
+Usage examples:
+
+echo(concat("a","b","c","d","e","f"));          // produces ECHO: ["a", "b", "c", "d", "e", "f"]
+echo(concat(["a","b","c"],["d","e","f"]));      // produces ECHO: ["a", "b", "c", "d", "e", "f"]
+echo(concat(1,2,3,4,5,6));                      // produces ECHO: [1, 2, 3, 4, 5, 6]
+
+Vector of vectors
+
+echo(concat([ [1],[2] ], [ [3] ]));             // produces ECHO: [[1], [2], [3]]
+
+Contrast with strings
+
+echo(concat([1,2,3],[4,5,6]));                   // produces ECHO: [1, 2, 3, 4, 5, 6]
+echo(concat("abc","def"));                       // produces ECHO: ["abc", "def"]
+echo(str("abc","def"));                          // produces ECHO: "abcdef"

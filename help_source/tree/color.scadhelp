@@ -1,0 +1,227 @@
+color
+
+Displays the child elements using the specified RGB color + alpha value. This is only used for the F5 preview as CGAL and STL (F6) do not currently support color. The alpha value defaults to 1.0 (opaque) if not specified.
+Function signature:
+
+color( c = [r, g, b, a] ) { ... }
+color( c = [r, g, b], alpha = 1.0 ) { ... }
+color( "#hexvalue" ) { ... }
+color( "colorname", 1.0 ) { ... }
+
+Note that the r, g, b, a values are limited to floating point values in the range [0,1] rather than the more traditional integers { 0 ... 255 }. However, nothing prevents you to using R, G, B values from {0 ... 255} with appropriate scaling: color([ R/255, G/255, B/255 ]) { ... }
+
+[Note: Requires version 2011.12] Colors can also be defined by name (case insensitive). For example, to create a red sphere, you can write color("red") sphere(5);. Alpha is specified as an extra parameter for named colors: color("Blue",0.5) cube(5);
+
+[Note: Requires version 2019.05] Hex values can be given in 4 formats, #rgb, #rgba, #rrggbb and #rrggbbaa. If the alpha value is given in both the hex value and as separate alpha parameter, the alpha parameter takes precedence.
+
+The available color names are taken from the World Wide Web consortium's SVG color list. A chart of the color names is as follows,
+(note that both spellings of grey/gray including slategrey/slategray etc are valid):
+
+// list of supported colors
+/*
+	Purples
+*/
+"Lavender"
+"Thistle"
+"Plum"
+"Violet"
+"Orchid"
+"Fuchsia"
+"Magenta"
+"MediumOrchid"
+"MediumPurple"
+"BlueViolet"
+"DarkViolet"
+"DarkOrchid"
+"DarkMagenta"
+"Purple"
+"Indigo"
+"DarkSlateBlue"
+"SlateBlue"
+"MediumSlateBlue"
+
+/*
+	Pinks
+*/
+"Pink"
+"LightPink"
+"HotPink"
+"DeepPink"
+"MediumVioletRed"
+"PaleVioletRed"
+	
+/*
+	Blues
+*/
+"Aqua"
+"Cyan"
+"LightCyan"
+"PaleTurquoise"
+"Aquamarine"
+"Turquoise"
+"MediumTurquoise"
+"DarkTurquoise"
+"CadetBlue"
+"SteelBlue"
+"LightSteelBlue"
+"PowderBlue"
+"LightBlue"
+"SkyBlue"
+"LightSkyBlue"
+"DeepSkyBlue"
+"DodgerBlue"
+"CornflowerBlue"
+"RoyalBlue"
+"Blue"
+"MediumBlue"
+"DarkBlue"
+"Navy"
+"MidnightBlue"
+
+/*
+	Reds
+*/
+"IndianRed"
+"LightCoral"
+"Salmon"
+"DarkSalmon"
+"LightSalmon"
+"Red"
+"Crimson"
+"FireBrick"
+"DarkRed"
+	
+/*
+	Greens
+*/
+"GreenYellow"
+"Chartreuse"
+"LawnGreen"
+"Lime"
+"LimeGreen"
+"PaleGreen"
+"LightGreen"
+"MediumSpringGreen"
+"SpringGreen"
+"MediumSeaGreen"
+"SeaGreen"
+"ForestGreen"
+"Green"
+"DarkGreen"
+"YellowGreen"
+"OliveDrab"
+"Olive"
+"DarkOliveGreen"
+"MediumAquamarine"
+"DarkSeaGreen"
+"LightSeaGreen"
+"DarkCyan"
+"Teal"
+
+/*
+	Oranges
+*/
+"LightSalmon"
+"Coral"
+"Tomato"
+"OrangeRed"
+"DarkOrange"
+"Orange"
+	
+/*
+	Yellows
+*/
+"Gold"
+"Yellow"
+"LightYellow"
+"LemonChiffon"
+"LightGoldenrodYellow"
+"PapayaWhip"
+"Moccasin"
+"PeachPuff"
+"PaleGoldenrod"
+"Khaki"
+"DarkKhaki"
+
+/*
+	Browns
+*/
+"Cornsilk"
+"BlanchedAlmond"
+"Bisque"
+"NavajoWhite"
+"Wheat"
+"BurlyWood"
+"Tan"
+"RosyBrown"
+"SandyBrown"
+"Goldenrod"
+"DarkGoldenrod"
+"Peru"
+"Chocolate"
+"SaddleBrown"
+"Sienna"
+"Brown"
+"Maroon"
+	
+/*
+	Whites
+*/
+"White"
+"Snow"
+"Honeydew"
+"MintCream"
+"Azure"
+"AliceBlue"
+"GhostWhite"
+"WhiteSmoke"
+"Seashell"
+"Beige"
+"OldLace"
+"FloralWhite"
+"Ivory"
+"AntiqueWhite"
+"Linen"
+"LavenderBlush"
+"MistyRose"
+
+/*
+	Grays
+*/
+"Gainsboro"
+"LightGrey"
+"Silver"
+"DarkGray"
+"Gray"
+"DimGray"
+"LightSlateGray"
+"SlateGray"
+"DarkSlateGray"
+"Black"
+
+Example
+A 3-D multicolor sine wave
+
+Here's a code fragment that draws a wavy multicolor object
+
+  for(i=[0:36]) {
+    for(j=[0:36]) {
+      color( [0.5+sin(10*i)/2, 0.5+sin(10*j)/2, 0.5+sin(10*(i+j))/2] )
+      translate( [i, j, 0] )
+      cube( size = [1, 1, 11+10*cos(10*i)*sin(10*j)] );
+    }
+  }
+
+↗ Being that -1<=sin(x)<=1 then 0<=(1/2 + sin(x)/2)<=1 , allowing for the RGB components assigned to color to remain within the [0,1] interval.
+
+Chart based on "Web Colors" from Wikipedia
+Example 2
+
+In cases where you want to optionally set a color based on a parameter you can use the following trick:
+
+ module myModule(withColors=false) {
+    c=withColors?"red":undef;
+    color(c) circle(r=10);
+ }
+
+Setting the colorname to undef keeps the default colors. 

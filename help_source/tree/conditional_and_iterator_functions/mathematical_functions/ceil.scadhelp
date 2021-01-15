@@ -1,0 +1,9 @@
+ceil
+
+Mathematical ceiling function.
+
+Returns the next highest integer value by rounding up value if necessary.
+
+See: Ceil Function
+
+echo(ceil(4.4),ceil(-4.4));     // produces ECHO: 5, -4

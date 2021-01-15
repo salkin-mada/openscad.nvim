@@ -1,0 +1,7 @@
+atan2
+Mathematical two-argument atan function atan2(y,x) that spans the full 360 degrees. This function returns the full angle (0-360) made between the x axis and the vector(x,y) expressed in degrees. atan can not distinguish between y/x and -y/-x and returns angles from -90 to +90
+
+Usage examples:
+
+atan2(5.0,-5.0);     //result: 135 degrees. atan() would give -45
+atan2(y,x);          //angle between (1,0) and (x,y) = angle around z-axis

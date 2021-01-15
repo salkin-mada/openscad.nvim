@@ -1,0 +1,42 @@
+
+square
+
+Creates a square or rectangle in the first quadrant. When center is true the square is centered on the origin. Argument names are optional if given in the order shown here.
+
+square(size = [x, y], center = true/false);
+square(size =  x    , center = true/false);
+
+    parameters:
+
+        size
+
+            single value, square with both sides this length
+            2 value array [x,y], rectangle with dimensions x and y
+
+        center
+
+            false (default), 1st (positive) quadrant, one corner at (0,0)
+            true, square is centered at (0,0)
+
+default values:  square();   yields:  square(size = [1, 1], center = false);
+
+    examples:
+
+10x10 square
+
+equivalent scripts for this example
+ square(size = 10);
+ square(10);
+ square([10,10]);
+ .
+ square(10,false);
+ square([10,10],false);
+ square([10,10],center=false);
+ square(size = [10, 10], center = false);
+ square(center = false,size = [10, 10] );
+
+OpenScad square 20x10
+
+equivalent scripts for this example
+ square([20,10],true);
+ a=[20,10];square(a,true);

@@ -1,0 +1,14 @@
+cos
+
+Mathematical cosine function of degrees.
+
+Parameters
+
+<degrees>
+    Decimal. Angle in degrees.
+
+Usage Example:
+
+ for(i=[0:36])
+    translate([i*10,0,0])
+       cylinder(r=5,h=cos(i*10)*50+60);

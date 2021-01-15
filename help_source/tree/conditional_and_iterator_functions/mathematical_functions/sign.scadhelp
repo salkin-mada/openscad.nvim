@@ -1,0 +1,20 @@
+sign
+
+Mathematical signum function. Returns a unit value that extracts the sign of a value see: Signum function
+
+Parameters
+
+<x>
+    Decimal. Value to find the sign of.
+
+Usage examples:
+
+sign(-5.0);
+sign(0);
+sign(8.0);
+
+Results:
+
+-1.0
+0.0
+1.0
