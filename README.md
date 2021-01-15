@@ -1,6 +1,6 @@
 # openscad.nvim
 
-Simple openscad cheatsheet/help written in lean Lua
+Syntax highlighting, cheatsheet, offline manual and fuzzy help plugin for the openscad language
 
 OpenSCAD help system and syntax highlighting in Neovim.
 This plugin was first created as a companion to [the original openscad syntax highlighting](https://github.com/sirtaj/vim-openscad).
@@ -18,9 +18,9 @@ Nvim >= 0.5 (nightly)
 
 Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 
-    - [zathura](https://github.com/pwmt/zathura)
-    - [skim](https://github/lotabout/skim.vim) or [fzf](https://github.com/junegunn/fzf.vim)
-    - [htop](https://htop.dev)
+- [zathura](https://github.com/pwmt/zathura)
+- [skim](https://github/lotabout/skim.vim) or [fzf](https://github.com/junegunn/fzf.vim)
+- [htop](https://htop.dev)
 
 ## Install
 
@@ -79,7 +79,7 @@ vim.g.openscad_exec_openscad_trig_key = '<A-o>'
 -- should the openscad project automatically be opened on startup
 vim.g.openscad_open_on = '!' -- comment out line to disable
 ```
-```vimscript
+```vim
 let g:openscad_cheatsheet_toggle_key = '<Enter>'
 let g:openscad_cheatsheet_window_blend = 15
 let g:openscad_help_trig_key = '<A-h>'
