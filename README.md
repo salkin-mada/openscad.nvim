@@ -49,23 +49,23 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 
 `<Enter>`/`<C-m>` in normal mode
 Toggle cheatsheet window
-![cheatsheet](https://oddodd.org/lib/openscad.nvim/cheatsheet.gif)
+![cheatsheet](./assets/cheatsheet.gif)
 
 `<A-h>` in normal mode
 Fuzzy find help resource
-![help](https://oddodd.org/lib/openscad.nvim/help.gif)
+![help](./assets/help.gif)
 
 `<A-m>` in normal mode
 Open offline openscad manual in pdf via `zathura`
-![manual](https://oddodd.org/lib/openscad.nvim/manual.gif)
+![manual](./assets/manual.gif)
 
 `<A-o>` in normal mode
 Open file in OpenSCAD
-![execute](https://oddodd.org/lib/openscad.nvim/execute.gif)
+![execute](./assets/execute.gif)
 
 `<A-c>` in normal mode
 toggle `htop` filtered for openscad processes
-![execute](https://oddodd.org/lib/openscad.nvim/htop.gif)
+![execute](./assets/htop.gif)
 
 ## Options
 
