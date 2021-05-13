@@ -124,8 +124,8 @@ function M.set_mappings()
 	api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_manual_trig_key, '<cmd> lua require"openscad".manual()<cr>', options)
 	api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_exec_openscad_trig_key, '<cmd> lua require"openscad".exec_openscad()<cr>', options)
 	-- api.nvim_buf_set_keymap(0, 'n', '<A-c>', '<cmd> lua require"openscad".Ttoggle()<cr>', options)
-	vim.fn.nvim_set_keymap('n', '<A-c>', ':OpenscadTopToggle<CR>', { noremap = true, silent = true })
-	vim.fn.nvim_set_keymap('t', '<A-c>', '<C-\\><C-n>:OpenscadTopToggle<CR>', { noremap = true, silent = true })
+	api.nvim_set_keymap('n', '<A-c>', ':OpenscadTopToggle<CR>', { noremap = true, silent = true })
+	api.nvim_set_keymap('t', '<A-c>', '<C-\\><C-n>:OpenscadTopToggle<CR>', { noremap = true, silent = true })
 end
 
 return M
