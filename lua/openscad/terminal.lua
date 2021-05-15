@@ -93,7 +93,7 @@ function T:create_win(buf, opts, bg_do)
     local win_handle = api.nvim_open_win(buf, true, opts)
 
     if bg_do then
-        fn.nvim_win_set_option(win_handle, 'winhl', 'Normal:Normal')
+        api.nvim_win_set_option(win_handle, 'winhl', 'Normal:Normal')
     end
 
     return win_handle
