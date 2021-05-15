@@ -6,17 +6,18 @@ local win_id
 local cheatsheet_filetype = 'openscad-help'
 
 function Window:new(tbl)
+    helpwin_buffer_visible = false;
+    helpwin_border_buffer_visible = false;
 	tbl = tbl or {}
 	setmetatable(tbl, self)
 	self.__index = self
-	self.bufnr = api.nvim_create_buf(true, true)
+	self.bufnr = api.nvim_create_buf(helpwin_buffer_visible, true)
 	-- api.nvim_buf_set_option(self.bufnr, 'buftype', 'nowrite')
 	vim.bo[self.bufnr].buftype = 'nowrite'
 	-- vim.bo[self.bufnr].modifiable = false
 	api.nvim_buf_set_name(self.bufnr, 'openscad-help-' .. self.bufnr)
 
-	-- self.border_bufnr = api.nvim_create_buf(false, true)
-	self.border_bufnr = api.nvim_create_buf(true, true)
+	self.border_bufnr = api.nvim_create_buf(helpwin_border_buffer_visible, true)
 	-- api.nvim_buf_set_option(self.border_bufnr, 'buftype', 'nowrite')
 	vim.bo[self.border_bufnr].buftype = 'nowrite'
 	api.nvim_buf_set_name(self.border_bufnr, 'openscad-help_border-' .. self.border_bufnr)
