@@ -5,6 +5,7 @@ local Window = {}
 local win_id
 local cheatsheet_filetype = 'openscad-help'
 
+-- function Window:new(tbl, self_close_mapping)
 function Window:new(tbl)
     helpwin_buffer_visible = false;
     helpwin_border_buffer_visible = false;
@@ -24,7 +25,10 @@ function Window:new(tbl)
 	local options = { noremap = true, nowait = true, silent = true }
 	-- local key = tostring(vim.g.openscad_cheatsheet_toggle_key)
 	-- api.nvim_buf_set_keymap(self.bufnr, 'n', key, '<cmd> lua require"openscad".self_close()<cr>', options)
-	api.nvim_buf_set_keymap(self.bufnr, 'n', '<Enter>', '<cmd> lua require"openscad".self_close()<cr>', options)
+	-- api.nvim_buf_set_keymap(self.bufnr, 'n', '<Enter>', '<cmd> lua require"openscad".self_close()<cr>', options)
+    -- if vim.g.openscad_cheatsheet_toggle_key then
+	api.nvim_buf_set_keymap(self.bufnr, 'n', vim.g.openscad_cheatsheet_toggle_key or '<Enter>', '<cmd> lua require"openscad".self_close()<cr>', options)
+    -- end
 	return tbl
 end
 
