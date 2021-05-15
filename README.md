@@ -69,7 +69,6 @@ toggle `htop` filtered for openscad processes
 
 ## Options
 
-Options may be defined in either Lua or Vimscript.
 
 These are the defaults:
 ```lua
@@ -79,23 +78,14 @@ vim.g.openscad_cheatsheet_window_blend = 15 --%
 vim.g.openscad_auto_open = false
 ```
 
-```vim
-let g:openscad_fuzzy_finder = 'skim'
-let g:openscad_cheatsheet_window_blend = 15 "%
-" should the openscad project automatically be opened on startup
-let g:openscad_auto_open = false
-```
-
 ## Mappings
 
-`openscad.nvim` mappings is by default not enabled.
+`openscad.nvim` mappings is by default *not* enabled.
 
 ```lua
 vim.g.openscad_default_mappings = true
 ```
-```vim
-let g:openscad_default_mappings = true
-```
+
 The default mappings are:
 ```lua
 vim.g.openscad_cheatsheet_toggle_key = '<Enter>'
@@ -104,10 +94,5 @@ vim.g.openscad_help_manual_trig_key = '<A-m>'
 vim.g.openscad_exec_openscad_trig_key = '<A-o>'
 vim.g.openscad_top_toggle = '<A-c>'
 ```
-```vim
-let g:openscad_cheatsheet_toggle_key = '<Enter>'
-let g:openscad_help_trig_key = '<A-h>'
-let g:openscad_help_manual_trig_key = '<A-m>'
-let g:openscad_exec_openscad_trig_key = '<A-o>'
-let g:openscad_top_toggle = '<A-c>'
-```
+
+* *Options* and *Mappings* may be defined in either Lua or Vimscript.
