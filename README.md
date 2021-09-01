@@ -28,7 +28,7 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
     1. Add this to your plugins.lua:
     ```lua
     use {
-        'salkinmada/openscad.nvim',
+        'salkin-mada/openscad.nvim',
             config = function ()
                 require('openscad')
                 end
@@ -38,7 +38,7 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 
 * To install using vim-plug
     1. Add this to your init.vim / .vimrc:
-    `Plug 'salkinmada/openscad.nvim'`
+    `Plug 'salkin-mada/openscad.nvim'`
     2. do a `:PlugInstall`
     3. add `lua require('openscad')` to your `init.vim`
     ```vimscript
