@@ -117,8 +117,8 @@ function M.set_mappings()
     api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_help_trig_key, '<cmd> lua require"openscad".help()<cr>', options)
     api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_manual_trig_key, '<cmd> lua require"openscad".manual()<cr>', options)
     api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_exec_openscad_trig_key, '<cmd> lua require"openscad".exec_openscad()<cr>', options)
-    api.nvim_set_keymap('n', vim.g.openscad_top_toggle, ':OpenscadTopToggle<CR>', { noremap = true, silent = true })
-    api.nvim_set_keymap('t', vim.g.openscad_top_toggle, '<C-\\><C-n>:OpenscadTopToggle<CR>', { noremap = true, silent = true })
+    api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_top_toggle, ':OpenscadTopToggle<CR>', { noremap = true, silent = true })
+    api.nvim_buf_set_keymap(0, 't', vim.g.openscad_top_toggle, '<C-\\><C-n>:OpenscadTopToggle<CR>', { noremap = true, silent = true })
 end
 
 function M.set_user_mappings()
@@ -143,7 +143,7 @@ end
 
 return M
 
--- NOTE(salkin): 
+-- NOTE(salkin):
 -- local mappings = {
     -- 	['['] = 'update_view(-1)',
     -- 	[']'] = 'update_view(1)',
