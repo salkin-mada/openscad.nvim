@@ -111,7 +111,7 @@ syn keyword openscadBuiltin lookup max min pow rands round sign sin sqrt tan
 syn keyword openscadBuiltin str len search version version_num concat chr ord cross norm
 syn keyword openscadBuiltin parent_module
 syn keyword openscadBuiltin dxf_cross dxf_dim
-syn keyword openscadBuiltinSpecial PI
+syn keyword openscadBuiltinSpecial PI undef
 """""""""""""""""""""""""""""""""""""""""
 " linkage
 """""""""""""""""""""""""""""""""""""""""
