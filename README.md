@@ -21,6 +21,7 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 - [zathura](https://github.com/pwmt/zathura)
 - [skim](https://github/lotabout/skim.vim) or [fzf](https://github.com/junegunn/fzf.vim)
 - [htop](https://htop.dev)
+- [LuaSnip](https://github.com/L3MON4D3/LuaSnip)(optional)
 
 ## Install
 
@@ -29,8 +30,13 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
     ```lua
     use {
         'salkin-mada/openscad.nvim',
+		requires = 'L3MON4D3/LuaSnip'
             config = function ()
                 require('openscad')
+
+				-- Import snippets
+				require"luasnip".snippets.openscad = require"openscad".get_snippets()
+
                 end
     }
     ```
