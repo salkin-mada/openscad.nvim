@@ -141,8 +141,15 @@ function M.set_user_mappings()
     end
 end
 
-return M
+function M.get_snippets()
+	return require"openscad.snippets"
+end
 
+function M.load_snippets()
+	require"luasnip".snippets.openscad = M.get_snippets()
+end
+
+return M
 -- NOTE(salkin):
 -- local mappings = {
     -- 	['['] = 'update_view(-1)',
