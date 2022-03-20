@@ -19,7 +19,7 @@ Nvim >= 0.5 (nightly)
 Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 
 - [zathura](https://github.com/pwmt/zathura)
-- [skim](https://github/lotabout/skim.vim) or [fzf](https://github.com/junegunn/fzf.vim)
+- [skim](https://github.com/lotabout/skim.vim) or [fzf](https://github.com/junegunn/fzf.vim)
 - [htop](https://htop.dev)
 - [LuaSnip](https://github.com/L3MON4D3/LuaSnip)(optional)
 
