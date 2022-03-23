@@ -1,6 +1,6 @@
 # openscad.nvim
 
-Syntax highlighting, cheatsheet, offline manual and fuzzy help plugin for the openscad language
+Syntax highlighting, cheatsheet, snippets, offline manual and fuzzy help plugin for the openscad language
 
 OpenSCAD help system and syntax highlighting in Neovim.
 This plugin was first created as a companion to [the original openscad syntax highlighting](https://github.com/sirtaj/vim-openscad).
@@ -12,7 +12,7 @@ Note that some features of this plugin is `*NIX` only
 
 ## Requirements
 
-Nvim >= 0.5 (nightly)
+Nvim >= 0.5
 
 ## Dependencies
 
@@ -25,56 +25,42 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 
 ## Install
 
-* To install using packer.nvim
-    1. Add this to your plugins.lua:
+* Using packer.nvim
     ```lua
     use {
         'salkin-mada/openscad.nvim',
-		requires = 'L3MON4D3/LuaSnip'
-            config = function ()
-                require('openscad')
-
-				-- Import snippets
-				require"luasnip".snippets.openscad = require"openscad".get_snippets()
-
-                end
+        requires = 'L3MON4D3/LuaSnip'
+        config = function ()
+            require('openscad')
+            -- Import snippets
+            require"luasnip".snippets.openscad = require"openscad".get_snippets()
+        end
     }
-    ```
-    2. run `:PackerInstall` or `:PackerSync` and compile lazy-loaders
-
-* To install using vim-plug
-    1. Add this to your init.vim / .vimrc:
-    `Plug 'salkin-mada/openscad.nvim'`
-    2. do a `:PlugInstall`
-    3. add `lua require('openscad')` to your `init.vim`
-    ```vimscript
-    lua require('openscad.nvim')
     ```
 
 ## Available mappings
 
 `<Enter>`/`<C-m>` in normal mode
 Toggle cheatsheet window
-![cheatsheet](./assets/cheatsheet.gif)
+![cheatsheet](https://oddodd.org/openscad.nvim-assets/cheatsheet-gifsicled.gif)
 
 `<A-h>` in normal mode
 Fuzzy find help resource
-![help](./assets/help.gif)
+![help](https://oddodd.org/openscad.nvim-assets/help-gifsicled.gif)
 
 `<A-m>` in normal mode
 Open offline openscad manual in pdf via `zathura`
-![manual](./assets/manual.gif)
+![manual](https://oddodd.org/openscad.nvim-assets/manual-gifsicled.gif)
 
 `<A-o>` in normal mode
 Open file in OpenSCAD
-![execute](./assets/execute.gif)
+![execute](https://oddodd.org/openscad.nvim-assets/execute-gifsicled.gif)
 
 `<A-c>` in normal mode
 toggle `htop` filtered for openscad processes
-![execute](./assets/htop.gif)
+![execute](https://oddodd.org/openscad.nvim-assets/htop-gifsicled.gif)
 
 ## Options
-
 
 These are the defaults:
 ```lua
