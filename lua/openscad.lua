@@ -14,9 +14,9 @@
 -- along with openscad.nvim.  If not, see <http://www.gnu.org/licenses/>.
 --
 --
--- Maintainer: Niklas Adam <salkinmada@protonmail.com>
--- Version:	0.1
--- Modified:	2020-09-12
+-- Maintainer: Niklas Adam <adam@oddodd.org>
+-- Version:	0.2
+-- Modified: 2022-03-29T11:08:17 CEST
 --
 
 local M = {}
@@ -50,6 +50,7 @@ function M.setup()
     vim.g.openscad_auto_open = vim.g.openscad_auto_open or false
     vim.g.openscad_cheatsheet_window_blend = vim.g.openscad_cheatsheet_window_blend or 15 -- %
     vim.g.openscad_fuzzy_finder = vim.g.openscad_fuzzy_finder or 'skim'
+    vim.g.openscad_load_snippets = vim.g.openscad_load_snippets or false
 end
 
 function M.load()
@@ -64,6 +65,9 @@ function M.load()
     end
     if vim.g.openscad_auto_open then
         M.exec_openscad()
+    end
+    if vim.g.openscad_load_snippets then
+        M.load_snippets()
     end
 end
 
@@ -146,7 +150,8 @@ function M.get_snippets()
 end
 
 function M.load_snippets()
-	require"luasnip".snippets.openscad = M.get_snippets()
+    local path = U.openscad_nvim_root_dir .. U.path_sep .. "lua" .. U.path_sep .. "openscad" .. U.path_sep .. "snippets"
+    require("luasnip.loaders.from_lua").load({paths = path})
 end
 
 return M

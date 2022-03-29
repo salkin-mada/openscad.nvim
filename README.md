@@ -29,12 +29,12 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
     ```lua
     use {
         'salkin-mada/openscad.nvim',
-        requires = 'L3MON4D3/LuaSnip'
         config = function ()
             require('openscad')
-            -- Import snippets
-            require"luasnip".snippets.openscad = require"openscad".get_snippets()
-        end
+            -- load snippets, note requires
+            vim.g.openscad_load_snippets = true
+        end,
+        requires = 'L3MON4D3/LuaSnip'
     }
     ```
 
@@ -66,6 +66,7 @@ These are the defaults:
 ```lua
 vim.g.openscad_fuzzy_finder = 'skim'
 vim.g.openscad_cheatsheet_window_blend = 15 --%
+vim.g.openscad_load_snippets = false
 -- should the openscad project automatically be opened on startup
 vim.g.openscad_auto_open = false
 ```
