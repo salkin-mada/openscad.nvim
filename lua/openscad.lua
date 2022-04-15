@@ -26,20 +26,35 @@ local T = require'openscad.terminal'
 local t = T:new()
 local api = vim.api
 local fn = vim.fn
+local autocmd = vim.api.nvim_create_autocmd
+-- local augroup = vim.api.nvim_create_augroup
 
--- api.nvim_command([[ autocmd FileType openscad lua require'openscad'.load() ]])
--- api.nvim_command([[ autocmd BufRead,BufNewFile *.scad setfiletype openscad ]])
--- api.nvim_command([[ autocmd BufRead,BufNewFile *.scadhelp setfiletype openscad-help ]])
-
--- soon lua autocmd and augroup will be implemented
-api.nvim_exec([[
-augroup openscad_hook
-autocmd!
-autocmd FileType openscad lua require'openscad'.load()
-autocmd BufRead,BufNewFile *.scad setfiletype openscad
-autocmd BufRead,BufNewFile *.scadhelp setfiletype openscad-help
-augroup END
-]], true)
+if fn.has "nvim-0.7" == 1 then
+    -- vim.filetype.add {
+    --     extension = {
+    --         scad = "openscad",
+    --         scadhelp = "openscad-help"
+    --     }
+    -- }
+    -- augroup("OpenSCAD", {clear = true})
+    autocmd({"BufRead", "BufNewFile"}, {pattern = "*.scad", command = 'setfiletype openscad'})
+    autocmd({"BufRead", "BufNewFile"}, {pattern = "*.scadhelp", command = 'setfiletype openscad-help'})
+    autocmd({"FileType"}, {
+        pattern = "openscad",
+        callback = function ()
+           require'openscad'.load()
+        end
+    })
+else
+    api.nvim_exec([[
+    augroup openscad_hook
+    autocmd!
+    autocmd FileType openscad lua require'openscad'.load()
+    autocmd BufRead,BufNewFile *.scad setfiletype openscad
+    autocmd BufRead,BufNewFile *.scadhelp setfiletype openscad-help
+    augroup END
+    ]], true)
+end
 
 function M.topToggle()
     t:toggle()
