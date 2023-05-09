@@ -118,8 +118,17 @@ function M.help()
 end
 
 function M.exec_openscad()
-    -- maybe just use api.jobstart .. instead
-    api.nvim_command[[ call jobstart('openscad ' . shellescape(expand('%:p')), {'detach':1}) ]]
+	local jobCommand;
+
+	-- If Linux, just use basecommand, if on MacOS, use a special command
+	if vim.fn.has('mac') == 1 then
+		jobCommand = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD ' .. vim.fn.expand('%:p')
+	else
+		-- TODO: What about Windows?
+		jobCommand = 'openscad ' .. vim.fn.expand('%:p')
+	end
+
+	vim.fn.jobstart(jobCommand)
 end
 
 function M.default_mappings()
