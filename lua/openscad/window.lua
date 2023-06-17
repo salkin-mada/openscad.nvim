@@ -28,6 +28,7 @@ function Window:new(tbl)
 	-- api.nvim_buf_set_keymap(self.bufnr, 'n', '<Enter>', '<cmd> lua require"openscad".self_close()<cr>', options)
     -- if vim.g.openscad_cheatsheet_toggle_key then
 	api.nvim_buf_set_keymap(self.bufnr, 'n', vim.g.openscad_cheatsheet_toggle_key or '<Enter>', '<cmd> lua require"openscad".self_close()<cr>', options)
+	api.nvim_buf_set_keymap(self.bufnr, 'n', '<esc>', '<cmd> lua require"openscad".self_close()<cr>', options)
     -- end
 	return tbl
 end
@@ -155,7 +156,7 @@ function Window:save_cursor_pos()
 end
 
 function Window:read_file()
-	local path = U.openscad_nvim_root_dir .. U.path_sep .. "help_source" .. U.path_sep .. "openscad_cheatsheet.scadhelp"
+	local path = require"openscad/utilities".get_plugin_root_dir() .. U.path_sep .. "help_source" .. U.path_sep .. "openscad_cheatsheet.scadhelp"
 	api.nvim_command('silent read '  .. path)
 end
 
