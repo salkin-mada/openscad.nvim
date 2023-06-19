@@ -28,6 +28,7 @@ function Window:new(tbl)
 	-- api.nvim_buf_set_keymap(self.bufnr, 'n', '<Enter>', '<cmd> lua require"openscad".self_close()<cr>', options)
     -- if vim.g.openscad_cheatsheet_toggle_key then
 	api.nvim_buf_set_keymap(self.bufnr, 'n', vim.g.openscad_cheatsheet_toggle_key or '<Enter>', '<cmd> lua require"openscad".self_close()<cr>', options)
+	api.nvim_buf_set_keymap(self.bufnr, 'n', '<esc>', '<cmd> lua require"openscad".self_close()<cr>', options)
     -- end
 	return tbl
 end
@@ -116,27 +117,63 @@ function Window:open()
 		self.read_file()
 		-- print("openscad cheatsheet")
 		self.place_cursor()
+
+		-- Autoclose window when the WinLeave event is triggered
+		api.nvim_command('autocmd WinLeave <buffer> lua require"openscad".self_close()')
+
 	else
 		print("w:", width, "h:", height, "term window is too small")
 	end
 end
 
 function Window:close()
+	-- Check if window is even open
+	if not self:is_open() then
+		return
+	end
+
 	self.save_cursor_pos()
 	api.nvim_win_close(self.winnr, true)
 	api.nvim_win_close(self.border_winnr, true)
 end
 
 function Window:destroy()
+
+	-- Check if buffer is even open
+	local buffer_is_open = api.nvim_buf_is_loaded(self.bufnr)
+	if not self:is_valid() or not buffer_is_open then
+		return
+	end
+
 	self.save_cursor_pos()
-	api.nvim_buf_delete(self.bufnr, { force = true })
-	api.nvim_buf_delete(self.border_bufnr, { force = true })
+
+	if api.nvim_buf_is_loaded(self.bufnr) and api.nvim_buf_is_valid(self.bufnr) then
+		api.nvim_buf_delete(self.bufnr, { force = true })
+	end
+
+	if api.nvim_buf_is_loaded(self.border_bufnr) and api.nvim_buf_is_valid(self.border_bufnr) then
+		api.nvim_buf_delete(self.border_bufnr, { force = true })
+	end
 end
 
+
 function Window:unload()
+
+	-- Check if buffer is even open
+	local buffer_is_open = api.nvim_buf_is_loaded(self.bufnr)
+	if not self:is_valid() or not buffer_is_open then
+		return
+	end
+
 	self.save_cursor_pos()
-	api.nvim_buf_delete(self.bufnr, { unload = true })
-	api.nvim_buf_delete(self.border_bufnr, { unload = true })
+
+	if api.nvim_buf_is_loaded(self.bufnr) and api.nvim_buf_is_valid(self.bufnr) then
+		api.nvim_buf_delete(self.bufnr, { unload = true })
+	end
+
+	if api.nvim_buf_is_loaded(self.border_bufnr) and api.nvim_buf_is_valid(self.border_bufnr) then
+		api.nvim_buf_delete(self.border_bufnr, { unload = true })
+	end
 end
 
 function Window:place_cursor()
@@ -155,7 +192,7 @@ function Window:save_cursor_pos()
 end
 
 function Window:read_file()
-	local path = U.openscad_nvim_root_dir .. U.path_sep .. "help_source" .. U.path_sep .. "openscad_cheatsheet.scadhelp"
+	local path = require"openscad/utilities".get_plugin_root_dir() .. U.path_sep .. "help_source" .. U.path_sep .. "openscad_cheatsheet.scadhelp"
 	api.nvim_command('silent read '  .. path)
 end
 
