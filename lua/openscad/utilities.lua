@@ -46,6 +46,10 @@ function U.get_plugin_root_dir()
 	return dir
 end
 
+function U.module_exists(mod)
+  return pcall(_G.require, mod) == true
+end
+
 U.openscad_nvim_root_dir = U.get_plugin_root_dir()
 
 return U

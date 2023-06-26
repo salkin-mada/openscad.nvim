@@ -17,7 +17,7 @@ Note that some features of this plugin is `*NIX` only
 Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 
 - [zathura](https://github.com/pwmt/zathura)
-- [skim](https://github.com/lotabout/skim.vim) or [fzf](https://github.com/junegunn/fzf.vim)
+- [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 - [htop](https://htop.dev)
 - [LuaSnip](https://github.com/L3MON4D3/LuaSnip)(optional)
 
