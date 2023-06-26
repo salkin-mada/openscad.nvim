@@ -4,6 +4,7 @@ local cmd = vim.cmd
 local Window = {}
 local win_id
 local cheatsheet_filetype = 'openscad-help'
+local U = require"openscad/utilities"
 
 -- function Window:new(tbl, self_close_mapping)
 function Window:new(tbl)
@@ -192,7 +193,7 @@ function Window:save_cursor_pos()
 end
 
 function Window:read_file()
-	local path = require"openscad/utilities".get_plugin_root_dir() .. U.path_sep .. "help_source" .. U.path_sep .. "openscad_cheatsheet.scadhelp"
+	local path = U.get_plugin_root_dir() .. U.path_sep .. "help_source" .. U.path_sep .. "openscad_cheatsheet.scadhelp"
 	api.nvim_command('silent read '  .. path)
 end
 
