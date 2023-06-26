@@ -1,7 +1,10 @@
 U = {}
 U.name = 'openscad.nvim'
-U.path_sep = vim.loop.os_uname().sysname:match('Windows') and '\\' or '/'
+U.path_sep = '/' -- vim.os_uname().sysname:match('Windows') and '\\' or '/'
 
+--- Get size (len) of table
+---@param table The table to be counted.
+---@return count
 function U.get_len(tbl)
 	local count = 0
 	for _ in pairs(tbl) do
@@ -10,42 +13,34 @@ function U.get_len(tbl)
 	return count
 end
 
-function U.get_plugin_root_dir()
-	local package_path = debug.getinfo(1).source:gsub('@', '')
-	package_path = vim.split(package_path, U.path_sep, true)
-	-- find index of plugin root dir
-	local index = 1
-	for i, v in ipairs(package_path) do
-		if v == U.name then
-			index = i
-			break
-		end
-	end
-	local path_len = U.get_len(package_path)
-	if index == 1 or index == path_len then
-		error('['..U.name..'] could not find plugin root dir')
-	end
-	local path = {}
-	for i, v in ipairs(package_path) do
-		if i > index then
-			break
-		end
-		path[i] = v
-	end
-	local dir = ''
-	for _, v in ipairs(path) do
-		-- first element is empty on unix
-		if v == '' then
-			dir = U.path_sep
-		else
-			dir = dir .. v .. U.path_sep
-		end
-	end
-	assert(dir ~= '', '['..U.name..'] Could not get plugin root path')
-	dir = dir:sub(1, -2) -- delete trailing slash
-	return dir
+--- Normalize a path to use Unix style separators: '/'.
+function U.normalize(path)
+  -- return (path:gsub('\\', '/'))
+  return (string.gsub(path, '\\', '/'))
 end
 
+-- - Get the root dir of a plugin.
+---@param plugin_name Optional plugin name, use nil to get openscad root dir.
+---@return Absolute path to the plugin root dir.
+function U.get_plugin_root_dir(plugin_name)
+  plugin_name = plugin_name or 'openscad.nvim'
+  local paths = vim.api.nvim_list_runtime_paths()
+    -- for k,v in pairs(paths) do
+    --     print(k,v)
+    -- end
+  for _, path in ipairs(paths) do
+    local index = path:find(plugin_name)
+    if index and path:sub(index, -1) == plugin_name then
+      -- return U.normalize(path)
+      return path
+    end
+  end
+  error(string.format('Could not get root dir for %s', plugin_name))
+end
+
+--- Check if a module exists
+---@param module The module name.
+---@return bool true.
 function U.module_exists(mod)
   return pcall(_G.require, mod) == true
 end

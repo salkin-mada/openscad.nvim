@@ -15,9 +15,9 @@
 --
 --
 -- Maintainer: Niklas Adam <adam@oddodd.org>
--- Version:	0.2
--- Modified: 2022-03-29T11:08:17 CEST
---
+-- Version:	0.3
+-- Modified: 2023-06-26T19:52:26 CEST
+
 
 local M = {}
 local W = require'openscad.window'
@@ -29,32 +29,21 @@ local fn = vim.fn
 local autocmd = vim.api.nvim_create_autocmd
 -- local augroup = vim.api.nvim_create_augroup
 
-if fn.has "nvim-0.7" == 1 then
-    -- vim.filetype.add {
-    --     extension = {
-    --         scad = "openscad",
-    --         scadhelp = "openscad-help"
-    --     }
-    -- }
-    -- augroup("OpenSCAD", {clear = true})
-    autocmd({"BufRead", "BufNewFile"}, {pattern = "*.scad", command = 'setfiletype openscad'})
-    autocmd({"BufRead", "BufNewFile"}, {pattern = "*.scadhelp", command = 'setfiletype openscad-help'})
-    autocmd({"FileType"}, {
-        pattern = "openscad",
-        callback = function ()
-           require'openscad'.load()
-        end
-    })
-else
-    api.nvim_exec([[
-    augroup openscad_hook
-    autocmd!
-    autocmd FileType openscad lua require'openscad'.load()
-    autocmd BufRead,BufNewFile *.scad setfiletype openscad
-    autocmd BufRead,BufNewFile *.scadhelp setfiletype openscad-help
-    augroup END
-    ]], true)
-end
+-- vim.filetype.add {
+--     extension = {
+--         scad = "openscad",
+--         scadhelp = "openscad-help"
+--     }
+-- }
+-- augroup("OpenSCAD", {clear = true})
+autocmd({"BufRead", "BufNewFile"}, {pattern = "*.scad", command = 'setfiletype openscad'})
+autocmd({"BufRead", "BufNewFile"}, {pattern = "*.scadhelp", command = 'setfiletype openscad-help'})
+autocmd({"FileType"}, {
+    pattern = "openscad",
+    callback = function ()
+        require'openscad'.load()
+    end
+})
 
 function M.topToggle()
     t:toggle()
@@ -64,7 +53,7 @@ function M.setup()
     vim.g.openscad_default_mappings = vim.g.openscad_default_mappings or false
     vim.g.openscad_auto_open = vim.g.openscad_auto_open or false
     vim.g.openscad_cheatsheet_window_blend = vim.g.openscad_cheatsheet_window_blend or 15 -- %
-    vim.g.openscad_fuzzy_finder = vim.g.openscad_fuzzy_finder or 'skim'
+    vim.g.openscad_fuzzy_profile = vim.g.openscad_fuzzy_profile or 'default'
     vim.g.openscad_load_snippets = vim.g.openscad_load_snippets or false
 end
 
@@ -84,6 +73,7 @@ function M.load()
     if vim.g.openscad_load_snippets then
         M.load_snippets()
     end
+
 end
 
 function M.self_close()
@@ -105,16 +95,19 @@ function M.manual()
 end
 
 function M.help()
+    -- local fzf = require("fzf")
+    local fzf = require('fzf-lua')
     local path = U.openscad_nvim_root_dir .. U.path_sep .. "help_source" .. U.path_sep .. "tree"
-    if vim.g.openscad_fuzzy_finder == 'skim' then
-        api.nvim_command('silent SK '  .. path)
-        print("skim openscad help")
-    elseif vim.g.openscad_fuzzy_finder == 'fzf' then
-        api.nvim_command('silent FZF '  .. path)
-        print("fzf openscad help")
-    else
-        print("openscad.nvim: this fuzzy finder (" .. vim.g.openscad_fuzzy_finder .. ") i dont know.. plz use 'skim' or 'fzf'")
-    end
+
+    -- coroutine.wrap(function()
+    -- local result = fzf.fzf("fd", "--preview {}", {fzf_cwd = path, fzf_binary = vim.g.openscad_fuzzy_profile})
+    --     if result then
+    --         vim.cmd("spl " .. path .. result[1])
+    --     end
+
+    fzf.setup({vim.g.openscad_fuzzy_profile})
+    fzf.files({ cwd = path })
+
 end
 
 function M.exec_openscad()
@@ -188,6 +181,22 @@ function M.load_snippets()
     local path = U.openscad_nvim_root_dir .. U.path_sep .. "lua" .. U.path_sep .. "openscad" .. U.path_sep .. "snippets"
     require("luasnip.loaders.from_lua").load({paths = path})
 end
+
+--------------------------------------------------
+--                 dev reloader                 --
+--------------------------------------------------
+if vim.g.openscad_dev then
+    vim.api.nvim_create_user_command("OpenscadDevUpdate", function()
+        if vim.fn.expand("%:p:h:h:t") == "openscad.nvim" then
+            package.loaded.openscad = nil
+            require("openscad")
+        else
+            print("working dir is: ".. vim.fn.getcwd())
+        end
+    end, {})
+end
+
+
 
 return M
 -- NOTE(salkin):

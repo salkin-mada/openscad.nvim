@@ -10,15 +10,15 @@ In the future maybe lsp, error checking, hints and completion will exist here.
 
 Note that some features of this plugin is `*NIX` only
 
-**Tested with NVIM `v0.9.1` and `v0.10.0-dev-567+g4dc86477b6`**
+**This plugin needs Neovim version => `v0.10.0`
 
 ## Dependencies
 
 Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 
 - [zathura](https://github.com/pwmt/zathura)
-- [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 - [htop](https://htop.dev)
+- [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 - [LuaSnip](https://github.com/L3MON4D3/LuaSnip)(optional)
 
 ## Install
@@ -31,7 +31,10 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
             require('openscad')
             vim.g.openscad_load_snippets = true
         end,
-        dependencies = 'L3MON4D3/LuaSnip'
+        dependencies = {
+            'ibhagwan/fzf-lua',
+            'L3MON4D3/LuaSnip'
+        }
     }
 ```
 
@@ -43,7 +46,10 @@ use {
             require('openscad')
             vim.g.openscad_load_snippets = true
             end,
-        requires = 'L3MON4D3/LuaSnip'
+        requires = {
+            'ibhagwan/fzf-lua',
+            'L3MON4D3/LuaSnip'
+        }
 }
 ```
 
@@ -73,12 +79,23 @@ toggle `htop` filtered for openscad processes
 
 These are the defaults:
 ```lua
-vim.g.openscad_fuzzy_finder = 'skim'
+vim.g.openscad_fuzzy_profile = 'default'
 vim.g.openscad_cheatsheet_window_blend = 15 --%
 vim.g.openscad_load_snippets = false
 -- should the openscad project automatically be opened on startup
 vim.g.openscad_auto_open = false
 ```
+
+## Fuzzy profiles
+
+| Profile          | Details                                    |
+| ---------------- | ------------------------------------------ |
+| `default`          | fzf-lua defaults, uses neovim "builtin" previewer and devicons (if available) for git/files/buffers |
+| `fzf-native`       | utilizes fzf's native previewing ability in the terminal where possible using `bat` for previews |
+| `fzf-tmux`         | similar to `fzf-native` and opens in a tmux popup (requires tmux > 3.2) |
+| `max-perf`         | similar to `fzf-native` and disables icons globally for max performance |
+| `telescope`        | closest match to telescope defaults in look and feel and keybinds |
+| `skim`             | uses [`skim`](https://github.com/lotabout/skim) as an fzf alternative, (requires the `sk` binary) |
 
 ## Mappings
 

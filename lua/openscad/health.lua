@@ -38,6 +38,8 @@ M.log = {
     }
 }
 
+local version = "0.10.0"
+
 ---@param opts? {checkhealth?: boolean}
 function M.check(opts)
     opts = opts or {}
@@ -47,14 +49,14 @@ function M.check(opts)
 
     log.checkhealth.start()
 
-    if vim.fn.has("nvim-0.8.0") ~= 1 then
-        log.checkhealth.error("Openscad.nvim prefers Neovim >= 0.8.0")
+    if vim.fn.has("nvim-"..version) ~= 1 then
+        log.checkhealth.error("`openscad.nvim` needs Neovim >= "..version)
         if not opts.checkhealth then
             return
         end
     else
         log.ascii.run()
-        log.checkhealth.ok("Neovim >= 0.8.0")
+        log.checkhealth.ok("Neovim >= "..version)
         -- if opts.checkhealth and vim.fn.has("nvim-0.9.0") ~= 1 then
         --   log.warn("**Neovim** 0.9.1 (nightly) is recommended, since it fixes some issues related to `vim.ui_attach`")
         -- end
@@ -62,7 +64,7 @@ function M.check(opts)
 
     if opts.checkhealth then
         if not U.module_exists("fzf") then
-            log.checkhealth.warn("Openscad needs `fzf-lua` (`nvim-fzf`, and `fzf.-` or `skim.vim`) for fuzzy selection in the `help` view")
+            log.checkhealth.warn("Openscad needs `fzf-lua` for fuzzy selection in the `help` view")
             if not opts.checkhealth then
                 return
             end
