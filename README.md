@@ -10,9 +10,7 @@ In the future maybe lsp, error checking, hints and completion will exist here.
 
 Note that some features of this plugin is `*NIX` only
 
-## Requirements
-
-Nvim >= 0.5
+**Tested with NVIM `v0.9.1` and `v0.10.0-dev-567+g4dc86477b6`**
 
 ## Dependencies
 
@@ -24,19 +22,30 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 - [LuaSnip](https://github.com/L3MON4D3/LuaSnip)(optional)
 
 ## Install
-
-* Using packer.nvim
-    ```lua
-    use {
+* Using lazy.nvim
+```lua
+    {
         'salkin-mada/openscad.nvim',
+        enabled = true,
         config = function ()
             require('openscad')
-            -- load snippets, note requires
             vim.g.openscad_load_snippets = true
         end,
-        requires = 'L3MON4D3/LuaSnip'
+        dependencies = 'L3MON4D3/LuaSnip'
     }
-    ```
+```
+
+* Using packer.nvim
+```lua
+use {
+    'salkin-mada/openscad.nvim',
+        config = function ()
+            require('openscad')
+            vim.g.openscad_load_snippets = true
+            end,
+        requires = 'L3MON4D3/LuaSnip'
+}
+```
 
 ## Available mappings
 
