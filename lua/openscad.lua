@@ -118,17 +118,28 @@ function M.help()
 end
 
 function M.exec_openscad()
-	local jobCommand;
+    local bin;
 
-	-- If Linux, just use basecommand, if on MacOS, use a special command
-	if vim.fn.has('mac') == 1 then
-		jobCommand = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD ' .. vim.fn.expand('%:p')
-	else
-		-- TODO: What about Windows?
-		jobCommand = 'openscad ' .. vim.fn.expand('%:p')
-	end
+    if vim.fn.has('linux') == 1 then
+        bin = 'openscad'
+    elseif vim.fn.has('mac') == 1 then
+        bin = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'
+    elseif vim.fn.has('windows') == 1 then
+        bin = 'openscad' -- not tested
+    else
+        print("openscad missing jobcommand implementation")
+    end
 
-	vim.fn.jobstart(jobCommand)
+    -- vim.fn.jobstart(bin .. vim.fn.expand('%:p'))
+
+    local on_exit = function(obj)
+        -- print(obj.code)
+        -- print(obj.signal)
+        print(obj.stdout)
+        -- print(obj.stderr)
+    end
+    -- vim.system({"echo", "openscad system call"}, {text = true}, on_exit)
+    vim.system({bin, vim.fn.expand('%:p')}, {detach = true}, on_exit)
 end
 
 function M.default_mappings()
