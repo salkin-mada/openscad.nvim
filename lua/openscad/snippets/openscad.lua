@@ -129,7 +129,7 @@ return {
 	}),
 
 	s({trig="rotate_extrude", dscr={"Rotate Extrude", "Rotational extrusion spins a 2D shape around the Z-axis to form a solid which has rotational symmetry."}}, {
-		t("angle="),
+		t("rotate_extrude(angle="),
 		i(1, "360"), t(", "),
 		t("convexity = "),
 		i(2, "2"),
