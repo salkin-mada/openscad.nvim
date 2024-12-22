@@ -25,7 +25,7 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
 
 ## Install
 
-* Using packer.nvim
+* Using `packer.nvim`
     ```lua
     use {
         'salkin-mada/openscad.nvim',
@@ -37,6 +37,18 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
         requires = 'L3MON4D3/LuaSnip'
     }
     ```
+* Using `lazy.nvim`
+    ```lua
+    {
+        "salkin-mada/openscad.nvim",
+        config = function()
+            vim.g.openscad_load_snippets = true
+            require("openscad")
+        end,
+        dependencies = { "L3MON4D3/LuaSnip", "junegunn/fzf.vim" },
+    },
+    ```
+
 
 ## Available mappings
 
