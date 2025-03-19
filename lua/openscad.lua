@@ -66,6 +66,8 @@ function M.setup()
     vim.g.openscad_cheatsheet_window_blend = vim.g.openscad_cheatsheet_window_blend or 15 -- %
     vim.g.openscad_fuzzy_finder = vim.g.openscad_fuzzy_finder or 'skim'
     vim.g.openscad_load_snippets = vim.g.openscad_load_snippets or false
+    vim.bo.commentstring = '//%s'
+
 end
 
 function M.load()
