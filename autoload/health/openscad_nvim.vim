@@ -6,14 +6,6 @@ function! s:check_nvim_version_minimum() abort
 	endif
 endfunction
 
-function! s:check_zathura_installed() abort
-	if !executable('zathura')
-		call v:lua.vim.health.error('has(zathura)','install zathura')
-	else
-		call v:lua.vim.health.ok("zathura is installed")
-	endif
-endfunction
-
 function! s:check_htop_installed() abort
 	if !executable('htop')
 		call v:lua.vim.health.error('has(htop)','install htop')
