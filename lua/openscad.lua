@@ -66,6 +66,7 @@ function M.setup()
     vim.g.openscad_cheatsheet_window_blend = vim.g.openscad_cheatsheet_window_blend or 15 -- %
     vim.g.openscad_fuzzy_finder = vim.g.openscad_fuzzy_finder or 'skim'
     vim.g.openscad_load_snippets = vim.g.openscad_load_snippets or false
+    vim.g.openscad_pdf_command = vim.g.openscad_pdf_command or ''
     vim.bo.commentstring = '//%s'
 
 end
@@ -103,7 +104,11 @@ end
 
 function M.manual()
     local path = U.openscad_nvim_root_dir .. U.path_sep .. "help_source" .. U.path_sep .. "openscad-manual.pdf"
-    api.nvim_command('silent !zathura --fork '  .. path)
+    if vim.g.openscad_pdf_command == '' then
+        print("openscad.nvim: pdf command is not set.. please set a pdf command")
+    else
+        api.nvim_command('silent !' .. vim.g.openscad_pdf_command .. ' ' .. path)
+    end
 end
 
 function M.help()
