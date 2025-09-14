@@ -14,6 +14,14 @@ function! s:check_htop_installed() abort
 	endif
 endfunction
 
+function! s:check_zathura_installed() abort
+	if !executable('zathura')
+		call v:lua.vim.health.error('has(zathura)','install htop')
+	else
+		call v:lua.vim.health.ok("zathura is installed")
+	endif
+endfunction
+
 function! s:check_fuzzy_finder() abort
 	if match(&runtimepath, 'skim.vim') != -1
 		call v:lua.vim.health.ok('skim.vim is installed')
