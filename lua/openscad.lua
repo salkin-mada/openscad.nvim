@@ -127,7 +127,7 @@ function M.help()
         }
         print("snacks openscad help")
     else
-        print("openscad.nvim: this fuzzy finder (" .. vim.g.openscad_fuzzy_finder .. ") i dont know.. plz use 'skim' or 'fzf'")
+        print("openscad.nvim: this fuzzy finder (" .. vim.g.openscad_fuzzy_finder .. ") i dont know.. plz use 'skim', 'fzf' or 'snacks'")
     end
 end
 
