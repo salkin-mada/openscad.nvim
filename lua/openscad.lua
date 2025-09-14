@@ -119,6 +119,15 @@ function M.help()
     elseif vim.g.openscad_fuzzy_finder == 'fzf' then
         api.nvim_command('silent FZF '  .. path)
         print("fzf openscad help")
+    elseif vim.g.openscad_fuzzy_finder == 'snacks' then
+        local snacks = require 'snacks'
+        snacks.picker.files {
+          prompt = 'OpenSCAD Help>',
+          cwd = path,
+          layout = 'ivy',
+          preview = nil,
+        }
+        print("snacks openscad help")
     else
         print("openscad.nvim: this fuzzy finder (" .. vim.g.openscad_fuzzy_finder .. ") i dont know.. plz use 'skim' or 'fzf'")
     end
