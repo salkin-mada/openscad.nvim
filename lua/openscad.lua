@@ -122,10 +122,8 @@ function M.help()
     elseif vim.g.openscad_fuzzy_finder == 'snacks' then
         local snacks = require 'snacks'
         snacks.picker.files {
-          prompt = 'OpenSCAD Help>',
-          cwd = path,
-          layout = 'ivy',
-          preview = nil,
+            prompt = 'OpenSCAD Help>',
+            cwd = path,
         }
         print("snacks openscad help")
     else
