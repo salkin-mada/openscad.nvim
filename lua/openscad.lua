@@ -45,10 +45,6 @@ autocmd({"FileType"}, {
     end
 })
 
-function M.topToggle()
-    t:toggle()
-end
-
 function M.setup()
     vim.g.openscad_default_mappings = vim.g.openscad_default_mappings or false
     vim.g.openscad_auto_open = vim.g.openscad_auto_open or false
@@ -91,11 +87,14 @@ end
 
 function M.manual()
     local path = U.openscad_nvim_root_dir .. U.path_sep .. "help_source" .. U.path_sep .. "openscad-manual.pdf"
-    api.nvim_command('silent !zathura --fork '  .. path)
+	if vim.g.openscad_pdf_cmd then
+		vim.cmd('silent !' .. vim.g.openscad_pdf_cmd .. ' ' .. path)
+	else
+		print("openscad: vim.g.openscad_pdf_cmd is not set")
+	end
 end
 
 function M.help()
-    -- local fzf = require("fzf")
     local fzf = require('fzf-lua')
     local path = U.openscad_nvim_root_dir .. U.path_sep .. "help_source" .. U.path_sep .. "tree"
 
@@ -140,7 +139,6 @@ function M.default_mappings()
     vim.g.openscad_help_trig_key = vim.g.openscad_help_trig_key or '<A-h>'
     vim.g.openscad_manual_trig_key = vim.g.openscad_manual_trig_key or '<A-m>'
     vim.g.openscad_exec_openscad_trig_key = vim.g.openscad_exec_openscad_trig_key or '<A-o>'
-    vim.g.openscad_top_toggle = vim.g.openscad_top_toggle or '<A-c>'
 end
 
 function M.set_mappings()
@@ -149,8 +147,6 @@ function M.set_mappings()
     api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_help_trig_key, '<cmd> lua require"openscad".help()<cr>', options)
     api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_manual_trig_key, '<cmd> lua require"openscad".manual()<cr>', options)
     api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_exec_openscad_trig_key, '<cmd> lua require"openscad".exec_openscad()<cr>', options)
-    api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_top_toggle, ':OpenscadTopToggle<CR>', { noremap = true, silent = true })
-    api.nvim_buf_set_keymap(0, 't', vim.g.openscad_top_toggle, '<C-\\><C-n>:OpenscadTopToggle<CR>', { noremap = true, silent = true })
 end
 
 function M.set_user_mappings()
@@ -166,10 +162,6 @@ function M.set_user_mappings()
     end
     if vim.g.openscad_exec_openscad_trig_key then
         api.nvim_buf_set_keymap(0, 'n', vim.g.openscad_exec_openscad_trig_key, '<cmd> lua require"openscad".exec_openscad()<cr>', options)
-    end
-    if vim.g.openscad_top_toggle then
-        api.nvim_set_keymap('n', vim.g.openscad_top_toggle, ':OpenscadTopToggle<CR>', { noremap = true, silent = true })
-        api.nvim_set_keymap('t', vim.g.openscad_top_toggle, '<C-\\><C-n>:OpenscadTopToggle<CR>', { noremap = true, silent = true })
     end
 end
 

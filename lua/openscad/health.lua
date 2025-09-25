@@ -73,20 +73,20 @@ function M.check(opts)
             log.checkhealth.ok("`fzf-lua` is installed")
         end
 
-        for _, bin in ipairs({ "zathura", "htop" }) do
-            if vim.fn.executable(bin) == 1 then
-            -- if U.toboolean(tostring(vim.fn.executable(bin))) then
-                log.checkhealth.ok(
-                    "`" .. bin .. "`"
-                    .. " is installed"
-                )
-            else
-                log.checkhealth.warn(
-                    "`"..bin.."`"
-                    .. " is not installed"
-                )
-            end
-        end
+        -- for _, bin in ipairs({ --[[ "zathura", ]] "htop" }) do
+        --     if vim.fn.executable(bin) == 1 then
+        --     -- if U.toboolean(tostring(vim.fn.executable(bin))) then
+        --         log.checkhealth.ok(
+        --             "`" .. bin .. "`"
+        --             .. " is installed"
+        --         )
+        --     else
+        --         log.checkhealth.warn(
+        --             "`"..bin.."`"
+        --             .. " is not installed"
+        --         )
+        --     end
+        -- end
     end
 
     return true

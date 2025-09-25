@@ -8,21 +8,25 @@ But it now contains a modified and updated version. In addition a `openscad-help
 
 In the future maybe lsp, error checking, hints and completion will exist here. 
 
-Note that some features of this plugin is `*NIX` only
-
 **This plugin needs Neovim version => `v0.10.0`
 
 ## Dependencies
 
-Run `:checkhealth` to see if you fulfill the dependencies and requirements.
-
-- [zathura](https://github.com/pwmt/zathura)
-- [htop](https://htop.dev)
 - [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 - [LuaSnip](https://github.com/L3MON4D3/LuaSnip)(optional)
 
+Run `:checkhealth openscad` to see if all is good.
+
 ## Install
+
+* Using rocks.nvim
+```vim
+:Rocks install salkin-mada/openscad.nvim
+:Rocks install ibhagwan/fzf-lua
+:Rocks install L3MON4D3/LuaSnip
+```
 * Using lazy.nvim
+
 ```lua
     {
         'salkin-mada/openscad.nvim',
@@ -36,21 +40,6 @@ Run `:checkhealth` to see if you fulfill the dependencies and requirements.
             'L3MON4D3/LuaSnip'
         }
     }
-```
-
-* Using packer.nvim
-```lua
-use {
-    'salkin-mada/openscad.nvim',
-        config = function ()
-            require('openscad')
-            vim.g.openscad_load_snippets = true
-            end,
-        requires = {
-            'ibhagwan/fzf-lua',
-            'L3MON4D3/LuaSnip'
-        }
-}
 ```
 
 ## Available mappings

@@ -87,7 +87,7 @@ function Window:open()
 	local width = vim.api.nvim_get_option("columns")
 	local height = vim.api.nvim_get_option("lines")
 	-- if the editor is big enough
-	if (width > 80 and height > 15) then
+	-- if (width > 80 and height > 15) then
 		-- the window height is 3/4 of the max height, but not more than 30
 		local win_height = math.min(math.ceil(height * 3 / 4), 30)
 		local win_width
@@ -122,9 +122,9 @@ function Window:open()
 		-- Autoclose window when the WinLeave event is triggered
 		api.nvim_command('autocmd WinLeave <buffer> lua require"openscad".self_close()')
 
-	else
-		print("w:", width, "h:", height, "term window is too small")
-	end
+	-- else
+		-- print("w:", width, "h:", height, "term window is too small")
+	-- end
 end
 
 function Window:close()

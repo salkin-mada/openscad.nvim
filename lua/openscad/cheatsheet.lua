@@ -54,7 +54,7 @@ function C:open()
 	local width = vim.api.nvim_get_option("columns")
 	local height = vim.api.nvim_get_option("lines")
 	-- if the editor is big enough
-	if (width > 80 and height > 15) then
+	-- if (width > 80 and height > 15) then
 		-- the window height is 3/4 of the max height, but not more than 30
 		local win_height = math.min(math.ceil(height * 3 / 4), 30)
 		local win_width
@@ -87,9 +87,9 @@ function C:open()
 		self.store('bg', self.border_winnr, self.border_bufnr)
 		self.store('fg', self.winnr, self.bufnr)
 		self.place_cursor()
-	else
-		print("w:", width, "h:", height, "term window is too small")
-	end
+	-- else
+	-- 	print("w:", width, "h:", height, "term window is too small")
+	-- end
 end
 
 function C:close()
