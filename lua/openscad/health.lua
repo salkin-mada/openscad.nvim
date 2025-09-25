@@ -63,7 +63,8 @@ function M.check(opts)
     end
 
     if opts.checkhealth then
-        if not U.module_exists("FzfLua") then
+        -- if not U.module_exists("FzfLua") then
+		if not vim.inspect(FzfLua) then
             log.checkhealth.warn("Openscad needs `fzf-lua` for fuzzy selection in the `help` view")
             if not opts.checkhealth then
                 return

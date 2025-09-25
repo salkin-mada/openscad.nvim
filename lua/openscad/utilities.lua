@@ -41,9 +41,9 @@ end
 --- Check if a module exists
 ---@param module The module name.
 ---@return bool true.
-function U.module_exists(mod)
-  return pcall(_G.require, mod) == true
-end
+-- function U.module_exists(mod)
+--   return pcall(_G.require, mod) == true
+-- end
 
 U.openscad_nvim_root_dir = U.get_plugin_root_dir()
 
