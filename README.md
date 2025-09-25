@@ -53,16 +53,14 @@ Fuzzy find help resource
 ![help](https://oddodd.org/openscad.nvim-assets/help-gifsicled.gif)
 
 `<A-m>` in normal mode
-Open offline openscad manual in pdf via `zathura`
+Open offline openscad manual in pdf via pdf viewer of your choice.
+Linux: `vim.g.openscad_pdf_cmd = 'zathura'`
+Mac: `vim.g.openscad_pdf_cmd = 'open'`
 ![manual](https://oddodd.org/openscad.nvim-assets/manual-gifsicled.gif)
 
 `<A-o>` in normal mode
 Open file in OpenSCAD
 ![execute](https://oddodd.org/openscad.nvim-assets/execute-gifsicled.gif)
-
-`<A-c>` in normal mode
-toggle `htop` filtered for openscad processes
-![execute](https://oddodd.org/openscad.nvim-assets/htop-gifsicled.gif)
 
 ## Options
 
@@ -100,7 +98,6 @@ vim.g.openscad_cheatsheet_toggle_key = '<Enter>'
 vim.g.openscad_help_trig_key = '<A-h>'
 vim.g.openscad_help_manual_trig_key = '<A-m>'
 vim.g.openscad_exec_openscad_trig_key = '<A-o>'
-vim.g.openscad_top_toggle = '<A-c>'
 ```
 
 * *Options* and *Mappings* may be defined in either Lua or Vimscript.
