@@ -14,11 +14,11 @@ function! s:check_htop_installed() abort
 	endif
 endfunction
 
-function! s:check_zathura_installed() abort
-	if !executable('zathura')
-		call v:lua.vim.health.error('has(zathura)','install zathura')
+function! s:check_pdf_viewer_installed() abort
+	if !executable(g:openscad_pdf_command)
+		call v:lua.vim.health.error('No pdf viewer set, or pdf viewer is not installed','install a pdf viewer and/or set g:openscad_pdf_command')
 	else
-		call v:lua.vim.health.ok("zathura is installed")
+		call v:lua.vim.health.ok('pdf viewer is configured and installed')
 	endif
 endfunction
 
@@ -45,7 +45,7 @@ endfunction
 function! health#openscad_nvim#check() abort
 	call v:lua.vim.health.start('openscad.nvim')
 	call s:check_nvim_version_minimum()
-	call s:check_zathura_installed()
+	call s:check_pdf_viewer_installed()
 	call s:check_htop_installed()
 	call s:check_fuzzy_finder()
 endfunction
