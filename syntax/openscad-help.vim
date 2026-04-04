@@ -16,7 +16,7 @@
 " Vim syntax file
 " Language: openscad-help (openscad-help file markup)
 "
-" Maintainer: Niklas Adam <salkinmada@protonmail.com>
+" Maintainer: Niklas Adam <adam@oddodd.org>
 " Version:	0.1
 " Modified:	2020-09-12
 "

@@ -1,26 +1,19 @@
--- these could just aswell have been in a "plugin" folder just as a openscad.lua file..
---
--- COMMAND
--- :OpenscadTopToggle
--- toggle a top looking at openscad
-vim.cmd("command! OpenscadTopToggle lua require('openscad').topToggle()")
+local function cmd(name, fn, opts)
+    vim.api.nvim_create_user_command(name, fn, opts or {})
+end
 
--- COMMAND
--- :OpenscadHelp
--- Fuzzy search and open help files
-vim.cmd("command! OpenscadHelp lua require('openscad').help()")
+-- :OpenscadHelp — fuzzy-search help files with fzf-lua
+cmd('OpenscadHelp',       function() require('openscad').help() end)
 
--- COMMAND
--- :OpenscadExecFile
--- Execute current file in openscad
-vim.cmd("command! OpenscadExecFile lua require('openscad').exec_openscad()")
+-- :OpenscadExecFile — open current file in OpenSCAD
+cmd('OpenscadExecFile',   function() require('openscad').exec_openscad() end)
 
--- COMMAND
--- :OpenscadCheatsheet
--- Toggle cheatsheet
-vim.cmd("command! OpenscadCheatsheet lua require('openscad').toggle()")
+-- :OpenscadCheatsheet — toggle the cheatsheet floating window
+cmd('OpenscadCheatsheet', function() require('openscad').toggle() end)
 
--- COMMAND
--- :OpenscadManual
--- Open manual using external pdf reader
-vim.cmd("command! OpenscadManual lua require('openscad').manual()")
+-- :OpenscadManual — open the offline PDF manual
+cmd('OpenscadManual',     function() require('openscad').manual() end)
+
+-- :OpenscadJustfile[!] — deploy a justfile template with all export recipes
+-- Use ! to overwrite an existing justfile
+cmd('OpenscadJustfile',   function(args) require('openscad').deploy_justfile(args.bang) end, { bang = true })

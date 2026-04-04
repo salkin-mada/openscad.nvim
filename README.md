@@ -1,105 +1,168 @@
 # openscad.nvim
 
-Syntax highlighting, cheatsheet, snippets, offline manual and fuzzy help plugin for the openscad language
+Syntax highlighting, cheatsheet, snippets, offline manual and fuzzy help plugin for the OpenSCAD language.
 
-OpenSCAD help system and syntax highlighting in Neovim.
-This plugin was first created as a companion to [the original openscad syntax highlighting](https://github.com/sirtaj/vim-openscad).
-But it now contains a modified and updated version. In addition a `openscad-help` filetype and syntax is implemented.
+> **This is a rewritten version targeting Neovim 0.10+
+> The previous version is preserved on the [`old`](../../tree/old) branch if you need it.
 
-In the future maybe lsp, error checking, hints and completion will exist here. 
-
-Note that some features of this plugin is `*NIX` only
-
-## Requirements
-
-Nvim >= 0.5
+**Requires Neovim >= 0.10
 
 ## Dependencies
 
-Run `:checkhealth` to see if you fulfill the dependencies and requirements.
+- [fzf-lua](https://github.com/ibhagwan/fzf-lua) or [snacks.nvim](https://github.com/folke/snacks.nvim) (for the help picker)
+- [LuaSnip](https://github.com/L3MON4D3/LuaSnip) (optional, for snippets)
 
-- [zathura](https://github.com/pwmt/zathura) or another pdf viewer
-- [skim](https://github.com/lotabout/skim.vim), [fzf](https://github.com/junegunn/fzf.vim) or [snacks.nvim](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md)
-- [htop](https://htop.dev)
-- [LuaSnip](https://github.com/L3MON4D3/LuaSnip)(optional)
+Run `:checkhealth openscad` to verify your setup.
 
 ## Install
 
-* Using `packer.nvim`
-    ```lua
-    use {
-        'salkin-mada/openscad.nvim',
-        config = function ()
-            require('openscad')
-            -- load snippets, note requires
-            vim.g.openscad_load_snippets = true
-        end,
-        requires = 'L3MON4D3/LuaSnip'
-    }
-    ```
-* Using `lazy.nvim`
-    ```lua
-    {
-        "salkin-mada/openscad.nvim",
-        config = function()
-            vim.g.openscad_load_snippets = true
-            require("openscad")
-        end,
-        dependencies = { "L3MON4D3/LuaSnip", "junegunn/fzf.vim" },
-    },
-    ```
+### vim.pack (Neovim 0.12 built-in)
 
+Add to `init.lua` or the `plugin` folder:
+
+```lua
+vim.pack.add({
+    'https://github.com/salkin-mada/openscad.nvim',
+    'https://github.com/ibhagwan/fzf-lua',
+    'https://github.com/L3MON4D3/LuaSnip', -- optional, for snippets
+})
+
+vim.g.openscad_load_snippets = true
+require('openscad')
+```
+
+> **Note:** `vim.pack.add` only accepts remote URLs — local paths are not supported.
+> For local development or forks, prepend the path to the runtime instead:
+>
+> ```lua
+> vim.opt.runtimepath:prepend('/path/to/openscad.nvim')
+> require('openscad')
+> ```
+
+### lazy.nvim
+
+```lua
+{
+    'salkin-mada/openscad.nvim',
+    config = function()
+        vim.g.openscad_load_snippets = true
+        require('openscad')
+    end,
+    dependencies = {
+        'ibhagwan/fzf-lua',
+        'L3MON4D3/LuaSnip', -- optional
+    },
+}
+```
 
 ## Available mappings
 
-`<Enter>`/`<C-m>` in normal mode
-Toggle cheatsheet window
+`<Enter>` in normal mode — toggle cheatsheet window
+
 ![cheatsheet](https://oddodd.org/openscad.nvim-assets/cheatsheet-gifsicled.gif)
 
-`<A-h>` in normal mode
-Fuzzy find help resource
+`<A-h>` in normal mode — fuzzy-search help files
+
 ![help](https://oddodd.org/openscad.nvim-assets/help-gifsicled.gif)
 
-`<A-m>` in normal mode
-Open offline openscad manual in pdf via pdf command (if one is set)
+`<A-m>` in normal mode — open offline OpenSCAD manual via your PDF viewer
+
 ![manual](https://oddodd.org/openscad.nvim-assets/manual-gifsicled.gif)
 
-`<A-o>` in normal mode
-Open file in OpenSCAD
-![execute](https://oddodd.org/openscad.nvim-assets/execute-gifsicled.gif)
+`<A-o>` in normal mode — open current file in OpenSCAD
 
-`<A-c>` in normal mode
-toggle `htop` filtered for openscad processes
-![execute](https://oddodd.org/openscad.nvim-assets/htop-gifsicled.gif)
+![execute](https://oddodd.org/openscad.nvim-assets/execute-gifsicled.gif)
 
 ## Options
 
-These are the defaults:
 ```lua
-vim.g.openscad_fuzzy_finder = 'skim'
--- when the pdf_command is run, the last argument will be the pdf filename
-vim.g.openscad_pdf_command = ''
-vim.g.openscad_cheatsheet_window_blend = 15 --%
+-- Enable the default key mappings listed above (off by default)
+vim.g.openscad_default_mappings = false
+
+-- PDF viewer binary used by <A-m> / :OpenscadManual
+-- Linux:  vim.g.openscad_pdf_cmd = 'zathura'
+-- macOS:  vim.g.openscad_pdf_cmd = 'open'
+vim.g.openscad_pdf_cmd = ''
+
+-- Fuzzy finder for the help picker.
+-- 'auto'    — use fzf-lua if installed, fall back to snacks.nvim (default)
+-- 'fzf-lua' — always use fzf-lua
+-- 'snacks'  — always use snacks.nvim
+vim.g.openscad_fuzzy_finder = 'auto'
+
+-- Load LuaSnip snippets on startup
 vim.g.openscad_load_snippets = false
--- should the openscad project automatically be opened on startup
+
+-- Automatically open the current file in OpenSCAD on startup
 vim.g.openscad_auto_open = false
 ```
 
-## Mappings
+## Custom mappings
 
-`openscad.nvim` mappings is by default *not* enabled.
+Mappings are disabled by default. Set `vim.g.openscad_default_mappings = true` to enable the defaults, or configure individual keys:
 
 ```lua
-vim.g.openscad_default_mappings = true
-```
-
-The default mappings are:
-```lua
-vim.g.openscad_cheatsheet_toggle_key = '<Enter>'
-vim.g.openscad_help_trig_key = '<A-h>'
-vim.g.openscad_manual_trig_key = '<A-m>'
+vim.g.openscad_cheatsheet_toggle_key  = '<Enter>'
+vim.g.openscad_help_trig_key          = '<A-h>'
+vim.g.openscad_manual_trig_key        = '<A-m>'
 vim.g.openscad_exec_openscad_trig_key = '<A-o>'
-vim.g.openscad_top_toggle = '<A-c>'
 ```
 
-* *Options* and *Mappings* may be defined in either Lua or Vimscript.
+Options and mappings may be defined in either Lua or Vimscript.
+
+## Commands
+
+| Command                | Action                                      |
+| ---------------------- | ------------------------------------------- |
+| `:OpenscadCheatsheet`  | Toggle cheatsheet floating window           |
+| `:OpenscadHelp`        | Fuzzy-search help files with fzf-lua        |
+| `:OpenscadManual`      | Open the offline PDF manual                 |
+| `:OpenscadExecFile`    | Open current file in OpenSCAD               |
+| `:OpenscadJustfile[!]` | Deploy a justfile export template (see below) |
+
+## Justfile export templates (overseer.nvim)
+
+`:OpenscadJustfile` writes a `justfile` into the directory of the current `.scad` file. The `src` variable is pre-filled with the current filename stem — editing `wheel.scad` gives you `src := "wheel"`.
+
+Use `!` to overwrite an existing file: `:OpenscadJustfile!`
+
+### Usage with overseer.nvim
+
+[overseer.nvim](https://github.com/stevearc/overseer.nvim) has a built-in `just` template provider, so once the justfile is deployed you can launch any export recipe directly from Neovim:
+
+```
+:OverseerRun
+```
+
+overseer will list all available recipes. Select one and it runs in a managed task window.
+
+### Usage from the terminal
+
+```sh
+just stl              # export STL
+just png              # render PNG (full, slow)
+just all              # export all formats
+just stl src=mypart   # override the source file
+```
+
+### Export recipes
+
+| Recipe        | Output file   | Notes                                       |
+| ------------- | ------------- | ------------------------------------------- |
+| `stl`         | `.stl`        | ASCII STL (OpenSCAD default)                |
+| `stl-ascii`   | `.stl`        | Explicitly ASCII                            |
+| `stl-binary`  | `.stl`        | Binary STL (smaller file)                   |
+| `off`         | `.off`        | Object File Format                          |
+| `amf`         | `.amf`        | Additive Manufacturing Format               |
+| `threemf`     | `.3mf`        | 3D Manufacturing Format                     |
+| `csg`         | `.csg`        | OpenSCAD CSG tree                           |
+| `svg`         | `.svg`        | 2D — requires a 2D object                  |
+| `dxf`         | `.dxf`        | 2D — requires a 2D object                  |
+| `pdf`         | `.pdf`        | 2D — requires a 2D object                  |
+| `png`         | `.png`        | Full render, 1920×1080, autocenter/viewall  |
+| `png-preview` | `.png`        | Fast thrown-together preview                |
+| `all-3d`      | —             | Runs: `stl off amf threemf`                 |
+| `all-2d`      | —             | Runs: `svg dxf pdf`                         |
+| `all`         | —             | Runs: `all-3d all-2d png`                   |
+
+The `openscad` variable in the justfile is auto-detected by OS — it uses the macOS `.app` bundle path on macOS and `openscad` from `$PATH` on Linux.
