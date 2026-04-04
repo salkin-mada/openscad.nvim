@@ -5,6 +5,7 @@ local function prequire(...)
 	return nil
 end
 local ls = prequire('luasnip')
+if not ls then return {} end
 local s = ls.snippet
 local ps = ls.parser.parse_snippet
 local sn = ls.snippet_node
@@ -22,16 +23,24 @@ return {
 	s("function", {t("function "), i(1,"name"), t("("), i(2,"x=1"), t(") = "), i(3,"x * 2"), t(";")}),
 	s("module", {t("module "), i(1,"name"), t("("), i(2,"x=1"), t({") {", ""}), i(3,"x * 2"), t({"", "}"})}),
 	s("circle",{ t("circle("), c(1,{t("radius"), t("d")}), t(","), t(")")}),
-	s("square",{ t("square("), i(1,"size"), t(","),i(2,"center"), t(")")}),
-	s("square",{ t("square("), t("["),i(1,"width"), t(","),i(2,"height"), t("]"), t(","),i(3,"center"), t(")")}),
-	s("polygon",{ t("polygon("), t("["),i(1,"points"),t("]"), t(")")}),
-	s("polygon",{ t("polygon("), t("["),i(1,"points"),t("]"), t(","),t("["),i(2,"paths"), t("]"), t(")")}),
+	s("square", { t("square("), c(1, {
+		sn(nil, { i(1,"size"),  t(","), i(2,"center") }),
+		sn(nil, { t("["), i(1,"width"), t(","), i(2,"height"), t("],"), i(3,"center") }),
+	}), t(")")}),
+	s("polygon", { t("polygon("), c(1, {
+		sn(nil, { t("["), i(1,"points"), t("]") }),
+		sn(nil, { t("["), i(1,"points"), t("],["), i(2,"paths"), t("]") }),
+	}), t(")")}),
 	s("text",{ t("text("), i(1,"t"), t(","),i(2,"size"), t(","),i(3,"font"), t(","), i(4,"halign"), t(","),i(5,"valign"), t(","),i(6,"spacing"), t(","), i(7,"direction"), t(","),i(8,"language"), t(","),i(9,"script"), t(")")}),
 	s("sphere",{ t("sphere("), c(1,{t("radius"), t("d")}), t(")")}),
-	s("cube",{ t("cube("), i(1,"size"), t(","),i(2,"center"), t(")")}),
-	s("cube",{ t("cube("), t("["),i(1,"width"), t(","),i(2,"depth"), t(","),i(3,"height"), t("]"),t(","),i(4,"center"), t(")")}),
-	s("cylinder",{ t("cylinder("), i(1,"h"), t(","),c(2,{t("r"), t("d")}), t(","),i(3,"center"), t(")")}),
-	s("cylinder",{ t("cylinder("), i(1,"h"),c(2,{t("r1"), t("d1")}), t(","),c(3,{t("r1"), t("d2")}), t(","),i(4,"center"), t(")")}),
+	s("cube", { t("cube("), c(1, {
+		sn(nil, { i(1,"size"), t(","), i(2,"center") }),
+		sn(nil, { t("["), i(1,"width"), t(","), i(2,"depth"), t(","), i(3,"height"), t("],"), i(4,"center") }),
+	}), t(")")}),
+	s("cylinder", { t("cylinder("), i(1,"h"), t(","), c(2, {
+		sn(nil, { c(1,{t("r"),t("d")}),  t(","), i(2,"center") }),
+		sn(nil, { c(1,{t("r1"),t("d1")}), t(","), c(2,{t("r2"),t("d2")}), t(","), i(3,"center") }),
+	}), t(")")}),
 	s("polyhedron",{ t("polyhedron("), i(1,"points"), t(","),i(2,"triangles"), t(","),i(3,"convexity"), t(")")}),
 	s("union",{ t("union("), t(")")}),
 	s("difference",{ t("difference("), t(")")}),
@@ -43,8 +52,10 @@ return {
 	s("resize",{ t("resize("), t("["),i(1,"x"), t(","),i(2,"y"), t(","),i(3,"z"), t("]"),t(","),i(4,"auto"), t(")")}),
 	s("mirror",{ t("mirror("), t("["),i(1,"x"), t(","),i(2,"y"), t(","),i(3,"z"), t("]"),t(")")}),
 	s("multmatrix",{ t("multmatrix("), i(1,"m"), t(")")}),
-	s("color",{ t("color("), i(1,"colorname"), t(")")}),
-	s("color",{ t("color("), t("["),i(1,"r"),t(","), i(2,"g"), t(","),i(3,"b"),t(","),i(4,"a"), t("]"), t(")")}),
+	s("color", { t("color("), c(1, {
+		sn(nil, { i(1,"colorname") }),
+		sn(nil, { t("["), i(1,"r"), t(","), i(2,"g"), t(","), i(3,"b"), t(","), i(4,"a"), t("]") }),
+	}), t(")")}),
 	s("offset",{ t("offset("), c(1,{t("r"), t("delta")}),t(","), i(2,"chamfer"), t(")")}),
 	s("hull",{ t("hull("), t(")")}),
 	s("minkowski",{ t("minkowski(1,"), t(")")}),
